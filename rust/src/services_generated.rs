@@ -13,7 +13,9 @@ pub struct Services {
 impl Services {
     pub(crate) fn new(inner: Arc<ClientInner>) -> Self {
         Self {
-            liquipedia: LiquipediaApi { inner: Arc::clone(&inner) },
+            liquipedia: LiquipediaApi {
+                inner: Arc::clone(&inner),
+            },
         }
     }
 }
@@ -138,7 +140,10 @@ pub struct LiquipediaCategoryMembersParams {
     pub cmstarthexsortkey: Option<String>,
     #[serde(rename = "cmendhexsortkey", skip_serializing_if = "Option::is_none")]
     pub cmendhexsortkey: Option<String>,
-    #[serde(rename = "cmstartsortkeyprefix", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "cmstartsortkeyprefix",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub cmstartsortkeyprefix: Option<String>,
     #[serde(rename = "cmendsortkeyprefix", skip_serializing_if = "Option::is_none")]
     pub cmendsortkeyprefix: Option<String>,
@@ -303,63 +308,98 @@ pub struct LiquipediaApi {
 
 impl LiquipediaApi {
     pub async fn all_pages(&self, params: LiquipediaAllPagesParams) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-all-pages", &params, RequestOptions::default()).await
+        self.inner
+            .call("liquipedia-all-pages", &params, RequestOptions::default())
+            .await
     }
 
     pub async fn backlinks(&self, params: LiquipediaBacklinksParams) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-backlinks", &params, RequestOptions::default()).await
+        self.inner
+            .call("liquipedia-backlinks", &params, RequestOptions::default())
+            .await
     }
 
     pub async fn categories(
         &self,
         params: LiquipediaCategoriesParams,
     ) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-categories", &params, RequestOptions::default()).await
+        self.inner
+            .call("liquipedia-categories", &params, RequestOptions::default())
+            .await
     }
 
     pub async fn category_members(
         &self,
         params: LiquipediaCategoryMembersParams,
     ) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-category-members", &params, RequestOptions::default()).await
+        self.inner
+            .call(
+                "liquipedia-category-members",
+                &params,
+                RequestOptions::default(),
+            )
+            .await
     }
 
     pub async fn enums(&self, params: LiquipediaEnumsParams) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-enums", &params, RequestOptions::default()).await
+        self.inner
+            .call("liquipedia-enums", &params, RequestOptions::default())
+            .await
     }
 
     pub async fn links(&self, params: LiquipediaLinksParams) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-links", &params, RequestOptions::default()).await
+        self.inner
+            .call("liquipedia-links", &params, RequestOptions::default())
+            .await
     }
 
     pub async fn page(&self, params: LiquipediaPageParams) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-page", &params, RequestOptions::default()).await
+        self.inner
+            .call("liquipedia-page", &params, RequestOptions::default())
+            .await
     }
 
     pub async fn prefix_search(
         &self,
         params: LiquipediaPrefixSearchParams,
     ) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-prefix-search", &params, RequestOptions::default()).await
+        self.inner
+            .call(
+                "liquipedia-prefix-search",
+                &params,
+                RequestOptions::default(),
+            )
+            .await
     }
 
     pub async fn recent_changes(
         &self,
         params: LiquipediaRecentChangesParams,
     ) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-recent-changes", &params, RequestOptions::default()).await
+        self.inner
+            .call(
+                "liquipedia-recent-changes",
+                &params,
+                RequestOptions::default(),
+            )
+            .await
     }
 
     pub async fn search(&self, params: LiquipediaSearchParams) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-search", &params, RequestOptions::default()).await
+        self.inner
+            .call("liquipedia-search", &params, RequestOptions::default())
+            .await
     }
 
     pub async fn tags(&self, params: LiquipediaTagsParams) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-tags", &params, RequestOptions::default()).await
+        self.inner
+            .call("liquipedia-tags", &params, RequestOptions::default())
+            .await
     }
 
     pub async fn wikis(&self, params: LiquipediaWikisParams) -> Result<ApiResponse, Error> {
-        self.inner.call("liquipedia-wikis", &params, RequestOptions::default()).await
+        self.inner
+            .call("liquipedia-wikis", &params, RequestOptions::default())
+            .await
     }
-
 }

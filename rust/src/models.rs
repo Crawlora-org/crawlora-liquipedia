@@ -17,17 +17,29 @@ pub struct ModelAppResponse {
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct ModelLiquipediaResponse {
-    #[serde(rename = "attribution", default, skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "attribution",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
     pub attribution: Option<String>,
     #[serde(rename = "data", default, skip_serializing_if = "Option::is_none")]
     pub data: Option<serde_json::Value>,
     #[serde(rename = "license", default, skip_serializing_if = "Option::is_none")]
     pub license: Option<String>,
-    #[serde(rename = "license_url", default, skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "license_url",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
     pub license_url: Option<String>,
     #[serde(rename = "page_url", default, skip_serializing_if = "Option::is_none")]
     pub page_url: Option<String>,
-    #[serde(rename = "source_url", default, skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "source_url",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
     pub source_url: Option<String>,
     #[serde(flatten)]
     pub additional: BTreeMap<String, Value>,
