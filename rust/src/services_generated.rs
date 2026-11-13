@@ -310,11 +310,17 @@ impl LiquipediaApi {
         self.inner.call("liquipedia-backlinks", &params, RequestOptions::default()).await
     }
 
-    pub async fn categories(&self, params: LiquipediaCategoriesParams) -> Result<ApiResponse, Error> {
+    pub async fn categories(
+        &self,
+        params: LiquipediaCategoriesParams,
+    ) -> Result<ApiResponse, Error> {
         self.inner.call("liquipedia-categories", &params, RequestOptions::default()).await
     }
 
-    pub async fn category_members(&self, params: LiquipediaCategoryMembersParams) -> Result<ApiResponse, Error> {
+    pub async fn category_members(
+        &self,
+        params: LiquipediaCategoryMembersParams,
+    ) -> Result<ApiResponse, Error> {
         self.inner.call("liquipedia-category-members", &params, RequestOptions::default()).await
     }
 
@@ -330,11 +336,17 @@ impl LiquipediaApi {
         self.inner.call("liquipedia-page", &params, RequestOptions::default()).await
     }
 
-    pub async fn prefix_search(&self, params: LiquipediaPrefixSearchParams) -> Result<ApiResponse, Error> {
+    pub async fn prefix_search(
+        &self,
+        params: LiquipediaPrefixSearchParams,
+    ) -> Result<ApiResponse, Error> {
         self.inner.call("liquipedia-prefix-search", &params, RequestOptions::default()).await
     }
 
-    pub async fn recent_changes(&self, params: LiquipediaRecentChangesParams) -> Result<ApiResponse, Error> {
+    pub async fn recent_changes(
+        &self,
+        params: LiquipediaRecentChangesParams,
+    ) -> Result<ApiResponse, Error> {
         self.inner.call("liquipedia-recent-changes", &params, RequestOptions::default()).await
     }
 
