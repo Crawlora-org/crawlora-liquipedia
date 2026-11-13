@@ -1,0 +1,1841 @@
+{
+  "basePath": "/api/v1",
+  "definitions": {
+    "app.Response": {
+      "description": "The Response struct is used for wrapping the API response with a code, message, and data.",
+      "properties": {
+        "code": {
+          "description": "Code is the HTTP status code or a custom code used to indicate the result of the request\n@example 200",
+          "type": "integer"
+        },
+        "data": {
+          "description": "Data is the response data (can be any object or null)\n@example {\"id\": 1, \"name\": \"John Doe\"}"
+        },
+        "msg": {
+          "description": "Msg is the message that describes the result of the request\n@example \"Request successful\""
+        }
+      },
+      "type": "object"
+    },
+    "liquipedia.Response": {
+      "properties": {
+        "attribution": {
+          "type": "string"
+        },
+        "data": {},
+        "license": {
+          "type": "string"
+        },
+        "license_url": {
+          "type": "string"
+        },
+        "page_url": {
+          "type": "string"
+        },
+        "source_url": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "host": "api.crawlora.net",
+  "info": {
+    "contact": {
+      "email": "support@crawlora.net",
+      "name": "API Support",
+      "url": "https://crawlora.net"
+    },
+    "description": "Crawlora is a hosted web-data and SERP API: call documented REST endpoints and get normalized JSON instead of HTML to parse — across search/SERP, maps and local, e-commerce, app stores, social, media and finance. One API key; Crawlora runs the proxy rotation, headless browsers and parsing behind the scenes. Billed pay-on-success: charged only on a successful 2xx response, 1-10 credits per call, with a free tier of 2,000 credits per month and no card. A hosted MCP server (mcp.crawlora.net/mcp) exposes the same catalog as agent tools. Search endpoints accept `q` as a universal alias for whichever search-term parameter they document (`query`, `term`, `keyword`, or Amazon's `k`), so one parameter name works across the whole catalog; an explicitly supplied documented name always wins.",
+    "license": {
+      "name": "Crawlora Terms of Service",
+      "url": "https://crawlora.net/terms"
+    },
+    "termsOfService": "https://crawlora.net/terms",
+    "title": "Crawlora API",
+    "version": "1.2",
+    "x-logo": {
+      "altText": "Crawlora",
+      "backgroundColor": "#FFFFFF",
+      "url": "https://raw.githubusercontent.com/Crawlora-org/crawlora-mcp/main/assets/logo-400x400.png"
+    }
+  },
+  "paths": {
+    "/liquipedia/all-pages": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Lists page titles on one Liquipedia wiki using MediaWiki list=allpages. Supports source namespace, prefix/range, redirect, language-link, size, protection, ordering, page-size, and continuation filters. Use liquipedia_enums for namespace and closed filter values. Results include Liquipedia attribution and CC BY-SA 3.0 license metadata.",
+        "operationId": "liquipedia-all-pages",
+        "parameters": [
+          {
+            "description": "Liquipedia wiki slug from liquipedia_wikis",
+            "in": "query",
+            "name": "wiki",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Source page title to start enumeration from",
+            "in": "query",
+            "name": "apfrom",
+            "type": "string"
+          },
+          {
+            "description": "Source page title to stop enumeration at",
+            "in": "query",
+            "name": "apto",
+            "type": "string"
+          },
+          {
+            "description": "Source page-title prefix",
+            "in": "query",
+            "name": "apprefix",
+            "type": "string"
+          },
+          {
+            "description": "Source namespace ID; discover IDs with liquipedia_enums",
+            "in": "query",
+            "name": "apnamespace",
+            "type": "integer"
+          },
+          {
+            "description": "Redirect filter",
+            "enum": [
+              "all",
+              "nonredirects",
+              "redirects"
+            ],
+            "in": "query",
+            "name": "apfilterredir",
+            "type": "string"
+          },
+          {
+            "description": "Language-link filter",
+            "enum": [
+              "all",
+              "withlanglinks",
+              "withoutlanglinks"
+            ],
+            "in": "query",
+            "name": "apfilterlanglinks",
+            "type": "string"
+          },
+          {
+            "description": "Minimum page size in bytes",
+            "in": "query",
+            "name": "apminsize",
+            "type": "integer"
+          },
+          {
+            "description": "Maximum page size in bytes; MediaWiki may disable this under miser mode",
+            "in": "query",
+            "name": "apmaxsize",
+            "type": "integer"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Repeatable page-protection type",
+            "in": "query",
+            "items": {
+              "enum": [
+                "edit",
+                "move",
+                "upload"
+              ],
+              "type": "string"
+            },
+            "name": "apprtype",
+            "type": "array"
+          },
+          {
+            "description": "Protection level; requires apprtype",
+            "enum": [
+              "autoconfirmed",
+              "sysop"
+            ],
+            "in": "query",
+            "name": "apprlevel",
+            "type": "string"
+          },
+          {
+            "description": "Cascading-protection filter",
+            "enum": [
+              "all",
+              "cascading",
+              "noncascading"
+            ],
+            "in": "query",
+            "name": "apprfiltercascade",
+            "type": "string"
+          },
+          {
+            "description": "Protection-expiry filter",
+            "enum": [
+              "all",
+              "definite",
+              "indefinite"
+            ],
+            "in": "query",
+            "name": "apprexpiry",
+            "type": "string"
+          },
+          {
+            "description": "Page size from 1 through 500, or max; source default is 10",
+            "in": "query",
+            "name": "aplimit",
+            "type": "string"
+          },
+          {
+            "description": "Source ordering direction",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "in": "query",
+            "name": "apdir",
+            "type": "string"
+          },
+          {
+            "description": "Native all-pages continuation token",
+            "in": "query",
+            "name": "apcontinue",
+            "type": "string"
+          },
+          {
+            "description": "Global MediaWiki continuation token",
+            "in": "query",
+            "name": "continue",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "Enumerate pages on a Liquipedia wiki",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    },
+    "/liquipedia/backlinks": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Returns pages linking to a source-selected target title or page ID through MediaWiki list=backlinks. Supports namespace and redirect filters, native page limits, redirect-target expansion, and continuation. Returned page records include their Liquipedia page URLs and CC BY-SA 3.0 attribution metadata.",
+        "operationId": "liquipedia-backlinks",
+        "parameters": [
+          {
+            "description": "Liquipedia wiki slug from liquipedia_wikis",
+            "in": "query",
+            "name": "wiki",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Target page title; mutually exclusive with blpageid",
+            "in": "query",
+            "name": "bltitle",
+            "type": "string"
+          },
+          {
+            "description": "Target page ID; mutually exclusive with bltitle",
+            "in": "query",
+            "name": "blpageid",
+            "type": "integer"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Repeatable referring-page namespace ID filter, or * for all",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "blnamespace",
+            "type": "array"
+          },
+          {
+            "description": "Source ordering direction",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "in": "query",
+            "name": "bldir",
+            "type": "string"
+          },
+          {
+            "description": "Source redirect filter",
+            "enum": [
+              "all",
+              "nonredirects",
+              "redirects"
+            ],
+            "in": "query",
+            "name": "blfilterredir",
+            "type": "string"
+          },
+          {
+            "description": "Page size from 1 through 500, or max; source default is 10",
+            "in": "query",
+            "name": "bllimit",
+            "type": "string"
+          },
+          {
+            "description": "Include backlinks to redirects of the target page",
+            "in": "query",
+            "name": "blredirect",
+            "type": "boolean"
+          },
+          {
+            "description": "Native backlinks continuation value",
+            "in": "query",
+            "name": "blcontinue",
+            "type": "string"
+          },
+          {
+            "description": "Global MediaWiki continuation value",
+            "in": "query",
+            "name": "continue",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "List Liquipedia pages linking to a page",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    },
+    "/liquipedia/categories": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Lists source categories on one Liquipedia wiki using MediaWiki list=allcategories. Supports native prefix/range filters, member-count bounds, size/hidden properties, and continuation. Results carry Liquipedia attribution and CC BY-SA 3.0 license metadata.",
+        "operationId": "liquipedia-categories",
+        "parameters": [
+          {
+            "description": "Liquipedia wiki slug from liquipedia_wikis",
+            "in": "query",
+            "name": "wiki",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "First category title to enumerate from",
+            "in": "query",
+            "name": "acfrom",
+            "type": "string"
+          },
+          {
+            "description": "Last category title to enumerate to",
+            "in": "query",
+            "name": "acto",
+            "type": "string"
+          },
+          {
+            "description": "Category title prefix",
+            "in": "query",
+            "name": "acprefix",
+            "type": "string"
+          },
+          {
+            "description": "Source ordering direction",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "in": "query",
+            "name": "acdir",
+            "type": "string"
+          },
+          {
+            "description": "Minimum category member count",
+            "in": "query",
+            "name": "acmin",
+            "type": "integer"
+          },
+          {
+            "description": "Maximum category member count",
+            "in": "query",
+            "name": "acmax",
+            "type": "integer"
+          },
+          {
+            "description": "Page size from 1 through 500, or max; source default is 10",
+            "in": "query",
+            "name": "aclimit",
+            "type": "string"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Repeatable category metadata property",
+            "in": "query",
+            "items": {
+              "enum": [
+                "size",
+                "hidden"
+              ],
+              "type": "string"
+            },
+            "name": "acprop",
+            "type": "array"
+          },
+          {
+            "description": "Native allcategories continuation token",
+            "in": "query",
+            "name": "accontinue",
+            "type": "string"
+          },
+          {
+            "description": "Global MediaWiki continuation value",
+            "in": "query",
+            "name": "continue",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "Enumerate categories on a Liquipedia wiki",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    },
+    "/liquipedia/category-members": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Lists pages in a category on one Liquipedia wiki with source page IDs, titles, member types, optional sort metadata, and native continuation tokens. Provide exactly one of cmtitle or cmpageid. Use liquipedia_enums for namespace, member type, property, sort, and direction values. Returned wiki metadata is CC BY-SA 3.0 with attribution.",
+        "operationId": "liquipedia-category-members",
+        "parameters": [
+          {
+            "description": "Liquipedia wiki slug from liquipedia_wikis",
+            "in": "query",
+            "name": "wiki",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Category title including Category:; mutually exclusive with cmpageid",
+            "in": "query",
+            "name": "cmtitle",
+            "type": "string"
+          },
+          {
+            "description": "Category page ID; mutually exclusive with cmtitle",
+            "in": "query",
+            "name": "cmpageid",
+            "type": "integer"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Repeatable source namespace ID filter, or * for all",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "cmnamespace",
+            "type": "array"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Repeatable member type filter",
+            "in": "query",
+            "items": {
+              "enum": [
+                "file",
+                "page",
+                "subcat"
+              ],
+              "type": "string"
+            },
+            "name": "cmtype",
+            "type": "array"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Repeatable returned metadata field",
+            "in": "query",
+            "items": {
+              "enum": [
+                "ids",
+                "title",
+                "sortkey",
+                "sortkeyprefix",
+                "type",
+                "timestamp"
+              ],
+              "type": "string"
+            },
+            "name": "cmprop",
+            "type": "array"
+          },
+          {
+            "description": "Page size, 1 through 500, or max (source default 10)",
+            "in": "query",
+            "name": "cmlimit",
+            "type": "string"
+          },
+          {
+            "description": "Global MediaWiki continuation value",
+            "in": "query",
+            "name": "continue",
+            "type": "string"
+          },
+          {
+            "description": "Category-members continuation value",
+            "in": "query",
+            "name": "cmcontinue",
+            "type": "string"
+          },
+          {
+            "description": "Category sort key",
+            "enum": [
+              "sortkey",
+              "timestamp"
+            ],
+            "in": "query",
+            "name": "cmsort",
+            "type": "string"
+          },
+          {
+            "description": "Category sort direction",
+            "enum": [
+              "asc",
+              "ascending",
+              "desc",
+              "descending",
+              "newer",
+              "older"
+            ],
+            "in": "query",
+            "name": "cmdir",
+            "type": "string"
+          },
+          {
+            "description": "Timestamp start bound for cmsort=timestamp",
+            "in": "query",
+            "name": "cmstart",
+            "type": "string"
+          },
+          {
+            "description": "Timestamp end bound for cmsort=timestamp",
+            "in": "query",
+            "name": "cmend",
+            "type": "string"
+          },
+          {
+            "description": "Hex sort-key start bound for cmsort=sortkey",
+            "in": "query",
+            "name": "cmstarthexsortkey",
+            "type": "string"
+          },
+          {
+            "description": "Hex sort-key end bound for cmsort=sortkey",
+            "in": "query",
+            "name": "cmendhexsortkey",
+            "type": "string"
+          },
+          {
+            "description": "Sort-key prefix start bound for cmsort=sortkey",
+            "in": "query",
+            "name": "cmstartsortkeyprefix",
+            "type": "string"
+          },
+          {
+            "description": "Sort-key prefix end bound for cmsort=sortkey",
+            "in": "query",
+            "name": "cmendsortkeyprefix",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "List Liquipedia category members",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    },
+    "/liquipedia/enums": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Returns live namespace IDs for one wiki plus the accepted search, links, backlinks, category-member, all-pages, all-categories, prefix-search, recent-changes, and tag filter values and page-size ranges supported by this API. Use the tags tool for current dynamic tag names. Results include Liquipedia attribution and CC BY-SA 3.0 license metadata.",
+        "operationId": "liquipedia-enums",
+        "parameters": [
+          {
+            "description": "Liquipedia wiki slug from liquipedia_wikis",
+            "in": "query",
+            "name": "wiki",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "Discover Liquipedia MediaWiki filters",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    },
+    "/liquipedia/links": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Returns outgoing wiki links for source-selected page titles, page IDs, or revision IDs through MediaWiki prop=links. Supports namespace filtering, linked-title filtering, native page limits, redirects, and continuation. Each source page and linked title includes its Liquipedia page URL; results carry CC BY-SA 3.0 attribution metadata.",
+        "operationId": "liquipedia-links",
+        "parameters": [
+          {
+            "description": "Liquipedia wiki slug from liquipedia_wikis",
+            "in": "query",
+            "name": "wiki",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Source page title; mutually exclusive with pageids and revids",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "titles",
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Source page ID; mutually exclusive with titles and revids",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "pageids",
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Source revision ID; mutually exclusive with titles and pageids",
+            "in": "query",
+            "items": {
+              "type": "integer"
+            },
+            "name": "revids",
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Repeatable linked-page namespace ID filter, or * for all",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "plnamespace",
+            "type": "array"
+          },
+          {
+            "description": "Page size from 1 through 500, or max; source default is 10",
+            "in": "query",
+            "name": "pllimit",
+            "type": "string"
+          },
+          {
+            "description": "Native links continuation value",
+            "in": "query",
+            "name": "plcontinue",
+            "type": "string"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Optional source title filter, up to 50 titles",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "pltitles",
+            "type": "array"
+          },
+          {
+            "description": "Source ordering direction",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "in": "query",
+            "name": "pldir",
+            "type": "string"
+          },
+          {
+            "description": "Resolve source-page redirects",
+            "in": "query",
+            "name": "redirects",
+            "type": "boolean"
+          },
+          {
+            "description": "Global MediaWiki continuation value",
+            "in": "query",
+            "name": "continue",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "List links from Liquipedia pages",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    },
+    "/liquipedia/page": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Gets one wiki page through MediaWiki action=parse. Provide exactly one of page, pageid, or oldid; an optional section selects one page section. Parsed content has media assets and active HTML removed. The response includes the source page URL, attribution, and CC BY-SA 3.0 license metadata; redistribute derivatives under the same or a compatible license.",
+        "operationId": "liquipedia-page",
+        "parameters": [
+          {
+            "description": "Liquipedia wiki slug from liquipedia_wikis",
+            "in": "query",
+            "name": "wiki",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Source page title; mutually exclusive with pageid and oldid",
+            "in": "query",
+            "name": "page",
+            "type": "string"
+          },
+          {
+            "description": "Source page ID; mutually exclusive with page and oldid",
+            "in": "query",
+            "name": "pageid",
+            "type": "integer"
+          },
+          {
+            "description": "Source revision ID; mutually exclusive with page and pageid",
+            "format": "int64",
+            "in": "query",
+            "name": "oldid",
+            "type": "integer"
+          },
+          {
+            "description": "Source section number or anchor ID",
+            "in": "query",
+            "name": "section",
+            "type": "string"
+          },
+          {
+            "description": "Resolve page redirects",
+            "in": "query",
+            "name": "redirects",
+            "type": "boolean"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "Get a Liquipedia page",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    },
+    "/liquipedia/prefix-search": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Uses MediaWiki list=prefixsearch to return best-matching page titles for a search prefix. Namespace IDs are discovered with liquipedia_enums; source search profiles, page limits, offsets, and continuation are forwarded. Results include page links, Liquipedia attribution, and CC BY-SA 3.0 license metadata.",
+        "operationId": "liquipedia-prefix-search",
+        "parameters": [
+          {
+            "description": "Liquipedia wiki slug from liquipedia_wikis",
+            "in": "query",
+            "name": "wiki",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Required source prefix-search input",
+            "in": "query",
+            "name": "pssearch",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Repeatable namespace ID filter, or * for all; discover namespace IDs with liquipedia_enums",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "psnamespace",
+            "type": "array"
+          },
+          {
+            "description": "Page size from 1 through 500, or max; source default is 10",
+            "in": "query",
+            "name": "pslimit",
+            "type": "string"
+          },
+          {
+            "description": "Non-negative source result offset",
+            "in": "query",
+            "name": "psoffset",
+            "type": "integer"
+          },
+          {
+            "description": "Source prefix-search ranking profile",
+            "enum": [
+              "classic",
+              "engine_autoselect",
+              "fast-fuzzy",
+              "fuzzy",
+              "fuzzy-subphrases",
+              "normal",
+              "normal-subphrases",
+              "strict"
+            ],
+            "in": "query",
+            "name": "psprofile",
+            "type": "string"
+          },
+          {
+            "description": "Global MediaWiki continuation token",
+            "in": "query",
+            "name": "continue",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "Suggest matching page titles on a Liquipedia wiki",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    },
+    "/liquipedia/recent-changes": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Lists recent wiki changes using MediaWiki list=recentchanges, with native time, namespace, tag, type, visibility, page-title, ordering, and continuation filters. User identities and edit-comment text are omitted. Change tags are discoverable with liquipedia_tags; numeric namespaces are discoverable with liquipedia_enums. Results include Liquipedia attribution and CC BY-SA 3.0 license metadata.",
+        "operationId": "liquipedia-recent-changes",
+        "parameters": [
+          {
+            "description": "Liquipedia wiki slug from liquipedia_wikis",
+            "in": "query",
+            "name": "wiki",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Source timestamp lower bound",
+            "in": "query",
+            "name": "rcstart",
+            "type": "string"
+          },
+          {
+            "description": "Source timestamp upper bound",
+            "in": "query",
+            "name": "rcend",
+            "type": "string"
+          },
+          {
+            "description": "Source ordering direction",
+            "enum": [
+              "newer",
+              "older"
+            ],
+            "in": "query",
+            "name": "rcdir",
+            "type": "string"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Repeatable namespace ID, or * for all; discover namespace IDs with liquipedia_enums",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "rcnamespace",
+            "type": "array"
+          },
+          {
+            "description": "Current change-tag name from liquipedia_tags",
+            "in": "query",
+            "name": "rctag",
+            "type": "string"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Repeatable metadata field; user, userid, comments, loginfo, and permission-restricted patrolled are omitted",
+            "in": "query",
+            "items": {
+              "enum": [
+                "flags",
+                "ids",
+                "redirect",
+                "sha1",
+                "sizes",
+                "tags",
+                "timestamp",
+                "title"
+              ],
+              "type": "string"
+            },
+            "name": "rcprop",
+            "type": "array"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Repeatable source visibility filter",
+            "in": "query",
+            "items": {
+              "enum": [
+                "!anon",
+                "!autopatrolled",
+                "!bot",
+                "!minor",
+                "!patrolled",
+                "!redirect",
+                "anon",
+                "autopatrolled",
+                "bot",
+                "minor",
+                "patrolled",
+                "redirect",
+                "unpatrolled"
+              ],
+              "type": "string"
+            },
+            "name": "rcshow",
+            "type": "array"
+          },
+          {
+            "description": "Page size from 1 through 500, or max; source default is 10",
+            "in": "query",
+            "name": "rclimit",
+            "type": "string"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Repeatable source change type",
+            "in": "query",
+            "items": {
+              "enum": [
+                "categorize",
+                "edit",
+                "external",
+                "log",
+                "new"
+              ],
+              "type": "string"
+            },
+            "name": "rctype",
+            "type": "array"
+          },
+          {
+            "description": "Return only the latest revision",
+            "in": "query",
+            "name": "rctoponly",
+            "type": "boolean"
+          },
+          {
+            "description": "Source page title filter",
+            "in": "query",
+            "name": "rctitle",
+            "type": "string"
+          },
+          {
+            "description": "Native recent-changes continuation token",
+            "in": "query",
+            "name": "rccontinue",
+            "type": "string"
+          },
+          {
+            "description": "Global MediaWiki continuation token",
+            "in": "query",
+            "name": "continue",
+            "type": "string"
+          },
+          {
+            "description": "Source content slot",
+            "enum": [
+              "main"
+            ],
+            "in": "query",
+            "name": "rcslot",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "List recent changes on a Liquipedia wiki",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    },
+    "/liquipedia/search": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Searches a selected Liquipedia wiki through its public MediaWiki API. Returns matching page IDs, titles, text snippets, page links, and native continuation data. Use a wiki slug from liquipedia_wikis and namespace/filter values from liquipedia_enums. Search ranking controls include the source query-independent and query-dependent profiles. Snippets and other wiki text are CC BY-SA 3.0 and carry source attribution.",
+        "operationId": "liquipedia-search",
+        "parameters": [
+          {
+            "description": "Liquipedia wiki slug from liquipedia_wikis",
+            "in": "query",
+            "name": "wiki",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "MediaWiki search query",
+            "in": "query",
+            "name": "q",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "Repeatable source namespace ID filter, or * for all",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "srnamespace",
+            "type": "array"
+          },
+          {
+            "description": "Search mode",
+            "enum": [
+              "nearmatch",
+              "text",
+              "title"
+            ],
+            "in": "query",
+            "name": "srwhat",
+            "type": "string"
+          },
+          {
+            "description": "Page size, 1 through 500, or max (source default 10)",
+            "in": "query",
+            "name": "srlimit",
+            "type": "string"
+          },
+          {
+            "description": "Non-negative source offset",
+            "in": "query",
+            "name": "sroffset",
+            "type": "integer"
+          },
+          {
+            "description": "Global MediaWiki continuation token",
+            "in": "query",
+            "name": "continue",
+            "type": "string"
+          },
+          {
+            "description": "Source search ordering",
+            "enum": [
+              "create_timestamp_asc",
+              "create_timestamp_desc",
+              "incoming_links_asc",
+              "incoming_links_desc",
+              "just_match",
+              "last_edit_asc",
+              "last_edit_desc",
+              "none",
+              "random",
+              "relevance",
+              "title_natural_asc",
+              "title_natural_desc",
+              "user_random"
+            ],
+            "in": "query",
+            "name": "srsort",
+            "type": "string"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Optional repeatable search metadata field",
+            "in": "query",
+            "items": {
+              "enum": [
+                "rewrittenquery",
+                "suggestion",
+                "totalhits"
+              ],
+              "type": "string"
+            },
+            "name": "srinfo",
+            "type": "array"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Optional repeatable result field",
+            "in": "query",
+            "items": {
+              "enum": [
+                "size",
+                "wordcount",
+                "timestamp",
+                "snippet",
+                "titlesnippet",
+                "redirecttitle",
+                "redirectsnippet",
+                "sectiontitle",
+                "sectionsnippet",
+                "isfilematch",
+                "categorysnippet",
+                "extensiondata"
+              ],
+              "type": "string"
+            },
+            "name": "srprop",
+            "type": "array"
+          },
+          {
+            "description": "Include source interwiki results",
+            "in": "query",
+            "name": "srinterwiki",
+            "type": "boolean"
+          },
+          {
+            "description": "Allow source query rewrites",
+            "in": "query",
+            "name": "srenablerewrites",
+            "type": "boolean"
+          },
+          {
+            "description": "Source query-independent ranking profile",
+            "enum": [
+              "classic",
+              "classic_noboostlinks",
+              "empty",
+              "wsum_inclinks",
+              "wsum_inclinks_pv",
+              "popular_inclinks_pv",
+              "popular_inclinks",
+              "engine_autoselect"
+            ],
+            "in": "query",
+            "name": "srqiprofile",
+            "type": "string"
+          },
+          {
+            "description": "Source query-dependent ranking profile",
+            "enum": [
+              "default",
+              "perfield_builder",
+              "perfield_builder_relaxed",
+              "perfield_builder_title_filter",
+              "engine_autoselect"
+            ],
+            "in": "query",
+            "name": "srqdprofile",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "Search a Liquipedia wiki",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    },
+    "/liquipedia/tags": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Lists the current MediaWiki change-tag names and optional native metadata. Use the returned tag names with liquipedia_recent_changes rctag. Results include Liquipedia attribution and CC BY-SA 3.0 license metadata.",
+        "operationId": "liquipedia-tags",
+        "parameters": [
+          {
+            "description": "Liquipedia wiki slug from liquipedia_wikis",
+            "in": "query",
+            "name": "wiki",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "collectionFormat": "csv",
+            "description": "Repeatable tag metadata property",
+            "in": "query",
+            "items": {
+              "enum": [
+                "active",
+                "defined",
+                "description",
+                "displayname",
+                "hitcount",
+                "source"
+              ],
+              "type": "string"
+            },
+            "name": "tgprop",
+            "type": "array"
+          },
+          {
+            "description": "Page size from 1 through 500, or max; source default is 10",
+            "in": "query",
+            "name": "tglimit",
+            "type": "string"
+          },
+          {
+            "description": "Native tag-list continuation token",
+            "in": "query",
+            "name": "tgcontinue",
+            "type": "string"
+          },
+          {
+            "description": "Global MediaWiki continuation token",
+            "in": "query",
+            "name": "continue",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "List change tags on a Liquipedia wiki",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    },
+    "/liquipedia/wikis": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Returns the current set of Liquipedia wiki prefixes and canonical wiki URLs from the Commons MediaWiki interwiki map. Use a returned wiki slug with liquipedia_enums, liquipedia_search, liquipedia_category_members, and liquipedia_page. Results include Liquipedia attribution and CC BY-SA 3.0 license metadata.",
+        "operationId": "liquipedia-wikis",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/app.Response"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/liquipedia.Response"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "schema": {
+              "$ref": "#/definitions/app.Response"
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "Discover Liquipedia wikis",
+        "tags": [
+          "liquipedia"
+        ]
+      }
+    }
+  },
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "in": "header",
+      "name": "x-api-key",
+      "type": "apiKey"
+    }
+  },
+  "swagger": "2.0",
+  "tags": [
+    {
+      "name": "liquipedia"
+    }
+  ]
+}
