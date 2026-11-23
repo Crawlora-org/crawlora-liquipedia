@@ -138,7 +138,7 @@ export interface LiquipediaRecentChangesParams {
   "rcdir"?: "newer" | "older";
   "rcnamespace"?: Array<string>;
   "rctag"?: string;
-  "rcprop"?: Array<"flags" | "ids" | "redirect" | "sha1" | "sizes" | "tags" | "timestamp" | "title">;
+  "rcprop"?: Array<"comment" | "flags" | "ids" | "loginfo" | "parsedcomment" | "redirect" | "sha1" | "sizes" | "tags" | "timestamp" | "title" | "user" | "userid">;
   "rcshow"?: Array<"!anon" | "!autopatrolled" | "!bot" | "!minor" | "!patrolled" | "!redirect" | "anon" | "autopatrolled" | "bot" | "minor" | "patrolled" | "redirect" | "unpatrolled">;
   "rclimit"?: string;
   "rctype"?: Array<"categorize" | "edit" | "external" | "log" | "new">;

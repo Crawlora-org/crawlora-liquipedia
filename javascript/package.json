@@ -1,6 +1,6 @@
 {
   "name": "@crawlora-org/liquipedia",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Crawlora Liquipedia API client with 12 endpoints for wiki discovery, pages, search, categories, recent changes, links, and backlinks",
   "homepage": "https://crawlora.net/?utm_source=npm&utm_medium=referral&utm_campaign=platform-clients&utm_content=liquipedia-javascript-homepage",
   "bugs": { "url": "https://github.com/Crawlora-org/crawlora-liquipedia/issues" },

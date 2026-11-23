@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "crawlora-liquipedia"
-version = "0.1.0"
+version = "0.2.0"
 description = "Crawlora Liquipedia API client with 12 endpoints for wiki discovery, pages, search, categories, recent changes, links, and backlinks"
 readme = "README.md"
 keywords = ["crawlora", "api-client", "sdk", "web-scraping", "scraping-api", "liquipedia", "liquipedia-api", "liquipedia-scraper", "liquipedia-data", "liquipedia-wiki-discovery", "liquipedia-pages", "liquipedia-search", "liquipedia-categories", "liquipedia-recent-changes", "liquipedia-links", "liquipedia-backlinks"]

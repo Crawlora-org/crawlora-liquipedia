@@ -8,7 +8,7 @@ Official Crawlora client packages for the hosted Liquipedia API. Access 12 API e
 - Python: [`crawlora-liquipedia`](python/README.md)
 - Go: [`github.com/Crawlora-org/crawlora-liquipedia`](go.mod)
 - Ruby: [`crawlora-liquipedia`](ruby/README.md)
-- Java: [`net.crawlora:crawlora-liquipedia:0.1.0`](java/README.md)
+- Java: [`net.crawlora:crawlora-liquipedia:0.2.0`](java/README.md)
 - PHP: [`crawlora/liquipedia`](php/README.md)
 - Rust: [`crawlora-liquipedia`](rust/README.md)
 

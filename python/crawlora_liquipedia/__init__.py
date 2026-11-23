@@ -6,10 +6,10 @@ from .operations import OPERATION_COUNT, OPERATION_IDS, PLATFORM
 
 Client = LiquipediaClient
 AsyncClient = AsyncLiquipediaClient
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 DISPLAY_NAME = 'Liquipedia'
 PLATFORM = 'liquipedia'
-CONTRACT_REVISION = 'sha256:158c4854176f104cc7b6851de936ca85b4f0ff757b4bcd2ca75ea6cd4fef0918'
+CONTRACT_REVISION = 'sha256:082e401eac4261443369b03e0bc06d47982d8179b660b8a889ac62ac4a802b58'
 
 __all__ = [
     "LiquipediaClient", "AsyncLiquipediaClient", "Client", "AsyncClient",

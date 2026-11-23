@@ -725,14 +725,19 @@ export const operations = {
       {
         "collectionFormat": "csv",
         "enum": [
+          "comment",
           "flags",
           "ids",
+          "loginfo",
+          "parsedcomment",
           "redirect",
           "sha1",
           "sizes",
           "tags",
           "timestamp",
-          "title"
+          "title",
+          "user",
+          "userid"
         ],
         "in": "query",
         "name": "rcprop",

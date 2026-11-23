@@ -2,11 +2,11 @@
   "api_path_prefix": "/liquipedia/",
   "async_class_name": "AsyncLiquipediaClient",
   "class_name": "LiquipediaClient",
-  "contract_revision": "sha256:158c4854176f104cc7b6851de936ca85b4f0ff757b4bcd2ca75ea6cd4fef0918",
+  "contract_revision": "sha256:082e401eac4261443369b03e0bc06d47982d8179b660b8a889ac62ac4a802b58",
   "display_name": "Liquipedia",
   "general_sdk_version": "1.50.0-sdk.1",
   "golang_module_name": "github.com/Crawlora-org/crawlora-liquipedia",
-  "golang_version": "0.1.0",
+  "golang_version": "0.2.0",
   "group_name": "liquipedia",
   "java_description": "Java client for Crawlora's hosted Liquipedia API, with wiki discovery, pages, search, categories, recent changes, links, and backlinks. Requires a Crawlora API key.",
   "maven_artifact_id": "crawlora-liquipedia",
@@ -17,10 +17,27 @@
   "php_repository": "https://github.com/Crawlora-org/crawlora-liquipedia",
   "platform": "liquipedia",
   "python_name": "crawlora-liquipedia",
+  "releases": [
+    {
+      "changes": [
+        "Updated operation contracts: liquipedia-recent-changes."
+      ],
+      "date": "2026-11-23",
+      "version": "0.2.0"
+    },
+    {
+      "changes": [
+        "Initial Liquipedia platform clients for Crawlora's hosted API across JavaScript/TypeScript, Python, Go, Ruby, Java, PHP, and Rust.",
+        "Includes typed endpoint methods generated from contract revision `sha256:158c4854176f104cc7b6851de936ca85b4f0ff757b4bcd2ca75ea6cd4fef0918`."
+      ],
+      "date": "2026-10-07",
+      "version": "0.1.0"
+    }
+  ],
   "repository": "https://github.com/Crawlora-org/crawlora-liquipedia",
   "ruby_gem_name": "crawlora-liquipedia",
   "rust_crate_name": "crawlora-liquipedia",
   "rust_module_name": "crawlora_liquipedia",
-  "source_contract_sha256": "5e1c92b8b286bf7b9e57ebf5ffd4eb2fb0f6bb7b841166163f14922129cae144",
-  "version": "0.1.0"
+  "source_contract_sha256": "a4248c6057b557ae0bf5ac08aa945ae1a7dbbc8acd135e8283ef5f51e3142226",
+  "version": "0.2.0"
 }

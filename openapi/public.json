@@ -1229,7 +1229,7 @@
         "consumes": [
           "application/json"
         ],
-        "description": "Lists recent wiki changes using MediaWiki list=recentchanges, with native time, namespace, tag, type, visibility, page-title, ordering, and continuation filters. User identities and edit-comment text are omitted. Change tags are discoverable with liquipedia_tags; numeric namespaces are discoverable with liquipedia_enums. Results include Liquipedia attribution and CC BY-SA 3.0 license metadata.",
+        "description": "Lists recent wiki changes using MediaWiki list=recentchanges, with native time, namespace, tag, type, visibility, page-title, ordering, and continuation filters. Editor identities, edit comments and log information are returned when requested through rcprop. Change tags are discoverable with liquipedia_tags; numeric namespaces are discoverable with liquipedia_enums. Results include Liquipedia attribution and CC BY-SA 3.0 license metadata.",
         "operationId": "liquipedia-recent-changes",
         "parameters": [
           {
@@ -1279,18 +1279,23 @@
           },
           {
             "collectionFormat": "csv",
-            "description": "Repeatable metadata field; user, userid, comments, loginfo, and permission-restricted patrolled are omitted",
+            "description": "Repeatable metadata field, including user, userid, comment, parsedcomment and loginfo; permission-restricted patrolled is not supported",
             "in": "query",
             "items": {
               "enum": [
+                "comment",
                 "flags",
                 "ids",
+                "loginfo",
+                "parsedcomment",
                 "redirect",
                 "sha1",
                 "sizes",
                 "tags",
                 "timestamp",
-                "title"
+                "title",
+                "user",
+                "userid"
               ],
               "type": "string"
             },

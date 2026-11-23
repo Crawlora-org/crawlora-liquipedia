@@ -9,7 +9,7 @@ import {
 
 export class LiquipediaClient extends CrawloraClient {
   constructor(options = {}) {
-    super({ ...options, userAgent: options.userAgent ?? "crawlora-liquipedia-js/0.1.0" });
+    super({ ...options, userAgent: options.userAgent ?? "crawlora-liquipedia-js/0.2.0" });
     this["allPages"] = (...args) => this.request("liquipedia-all-pages", ...args);
     this["backlinks"] = (...args) => this.request("liquipedia-backlinks", ...args);
     this["categories"] = (...args) => this.request("liquipedia-categories", ...args);
@@ -34,5 +34,5 @@ export {
   CrawloraServerError
 };
 export { groups, operations, operationCount, OperationIds } from "./operations.js";
-export const VERSION = "0.1.0";
+export const VERSION = "0.2.0";
 export default LiquipediaClient;

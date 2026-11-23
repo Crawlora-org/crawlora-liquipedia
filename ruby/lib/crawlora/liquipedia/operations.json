@@ -1359,14 +1359,19 @@
           "collectionFormat": "csv",
           "type": "array",
           "enum": [
+            "comment",
             "flags",
             "ids",
+            "loginfo",
+            "parsedcomment",
             "redirect",
             "sha1",
             "sizes",
             "tags",
             "timestamp",
-            "title"
+            "title",
+            "user",
+            "userid"
           ]
         },
         {
@@ -1487,18 +1492,23 @@
         },
         {
           "collectionFormat": "csv",
-          "description": "Repeatable metadata field; user, userid, comments, loginfo, and permission-restricted patrolled are omitted",
+          "description": "Repeatable metadata field, including user, userid, comment, parsedcomment and loginfo; permission-restricted patrolled is not supported",
           "in": "query",
           "items": {
             "enum": [
+              "comment",
               "flags",
               "ids",
+              "loginfo",
+              "parsedcomment",
               "redirect",
               "sha1",
               "sizes",
               "tags",
               "timestamp",
-              "title"
+              "title",
+              "user",
+              "userid"
             ],
             "type": "string"
           },

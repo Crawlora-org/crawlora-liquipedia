@@ -7,7 +7,7 @@ from .async_client import AsyncCrawloraClient
 class LiquipediaClient(CrawloraClient):
     """Synchronous Liquipedia API client."""
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        kwargs.setdefault('user_agent', 'crawlora-liquipedia-python/0.1.0')
+        kwargs.setdefault('user_agent', 'crawlora-liquipedia-python/0.2.0')
         super().__init__(*args, **kwargs)
 
     def all_pages(self, **params: Any) -> Any:
@@ -85,7 +85,7 @@ class LiquipediaClient(CrawloraClient):
 class AsyncLiquipediaClient(AsyncCrawloraClient):
     """Asynchronous Liquipedia API client."""
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        kwargs.setdefault('user_agent', 'crawlora-liquipedia-python/0.1.0')
+        kwargs.setdefault('user_agent', 'crawlora-liquipedia-python/0.2.0')
         super().__init__(*args, **kwargs)
 
     async def all_pages(self, **params: Any) -> Any:
