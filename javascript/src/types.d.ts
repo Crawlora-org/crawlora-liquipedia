@@ -89,6 +89,19 @@ export interface LiquipediaCategoryMembersParams {
   "cmendsortkeyprefix"?: string;
 }
 
+export type LiquipediaEmbeddedinResponse = CrawloraResponse<ModelAppResponse & { "data"?: ModelLiquipediaResponse }>;
+export interface LiquipediaEmbeddedinParams {
+  "wiki": string;
+  "eititle"?: string;
+  "eipageid"?: number;
+  "einamespace"?: Array<string>;
+  "eidir"?: "ascending" | "descending";
+  "eifilterredir"?: "all" | "nonredirects" | "redirects";
+  "eilimit"?: string;
+  "eicontinue"?: string;
+  "continue"?: string;
+}
+
 export type LiquipediaEnumsResponse = CrawloraResponse<ModelAppResponse & { "data"?: ModelLiquipediaResponse }>;
 export interface LiquipediaEnumsParams {
   "wiki": string;
@@ -180,11 +193,35 @@ export type LiquipediaWikisResponse = CrawloraResponse<ModelAppResponse & { "dat
 export interface LiquipediaWikisParams {
 }
 
+export type LiquipediaWikitextResponse = CrawloraResponse<ModelAppResponse & { "data"?: ModelLiquipediaResponse }>;
+export interface LiquipediaWikitextParams {
+  "wiki": string;
+  "titles"?: Array<string>;
+  "pageids"?: Array<number>;
+  "revids"?: Array<number>;
+  "rvprop"?: Array<"comment" | "content" | "contentmodel" | "flagged" | "flags" | "ids" | "parsedcomment" | "parsetree" | "roles" | "sha1" | "size" | "slotsha1" | "slotsize" | "tags" | "timestamp" | "user" | "userid">;
+  "rvsection"?: string;
+  "rvlimit"?: string;
+  "rvstartid"?: number;
+  "rvendid"?: number;
+  "rvstart"?: string;
+  "rvend"?: string;
+  "rvdir"?: "newer" | "older";
+  "rvuser"?: string;
+  "rvexcludeuser"?: string;
+  "rvtag"?: string;
+  "rvcontinue"?: string;
+  "continue"?: string;
+  "redirects"?: boolean;
+  "infobox"?: boolean;
+}
+
 export interface LiquipediaService {
   allPages<T = LiquipediaAllPagesResponse>(params: LiquipediaAllPagesParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
   backlinks<T = LiquipediaBacklinksResponse>(params: LiquipediaBacklinksParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
   categories<T = LiquipediaCategoriesResponse>(params: LiquipediaCategoriesParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
   categoryMembers<T = LiquipediaCategoryMembersResponse>(params: LiquipediaCategoryMembersParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
+  embeddedin<T = LiquipediaEmbeddedinResponse>(params: LiquipediaEmbeddedinParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
   enums<T = LiquipediaEnumsResponse>(params: LiquipediaEnumsParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
   links<T = LiquipediaLinksResponse>(params: LiquipediaLinksParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
   page<T = LiquipediaPageResponse>(params: LiquipediaPageParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
@@ -193,6 +230,7 @@ export interface LiquipediaService {
   search<T = LiquipediaSearchResponse>(params: LiquipediaSearchParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
   tags<T = LiquipediaTagsResponse>(params: LiquipediaTagsParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
   wikis<T = LiquipediaWikisResponse>(params?: LiquipediaWikisParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
+  wikitext<T = LiquipediaWikitextResponse>(params: LiquipediaWikitextParams, options?: import('./index.js').CrawloraRequestOptions): Promise<T>;
 }
 
 export interface CrawloraGeneratedGroups {
@@ -204,6 +242,7 @@ export interface OperationParamsMap {
   "liquipedia-backlinks": LiquipediaBacklinksParams;
   "liquipedia-categories": LiquipediaCategoriesParams;
   "liquipedia-category-members": LiquipediaCategoryMembersParams;
+  "liquipedia-embeddedin": LiquipediaEmbeddedinParams;
   "liquipedia-enums": LiquipediaEnumsParams;
   "liquipedia-links": LiquipediaLinksParams;
   "liquipedia-page": LiquipediaPageParams;
@@ -212,6 +251,7 @@ export interface OperationParamsMap {
   "liquipedia-search": LiquipediaSearchParams;
   "liquipedia-tags": LiquipediaTagsParams;
   "liquipedia-wikis": LiquipediaWikisParams;
+  "liquipedia-wikitext": LiquipediaWikitextParams;
 }
 
 export interface OperationResponseMap {
@@ -219,6 +259,7 @@ export interface OperationResponseMap {
   "liquipedia-backlinks": LiquipediaBacklinksResponse;
   "liquipedia-categories": LiquipediaCategoriesResponse;
   "liquipedia-category-members": LiquipediaCategoryMembersResponse;
+  "liquipedia-embeddedin": LiquipediaEmbeddedinResponse;
   "liquipedia-enums": LiquipediaEnumsResponse;
   "liquipedia-links": LiquipediaLinksResponse;
   "liquipedia-page": LiquipediaPageResponse;
@@ -227,6 +268,7 @@ export interface OperationResponseMap {
   "liquipedia-search": LiquipediaSearchResponse;
   "liquipedia-tags": LiquipediaTagsResponse;
   "liquipedia-wikis": LiquipediaWikisResponse;
+  "liquipedia-wikitext": LiquipediaWikitextResponse;
 }
 
 export interface OperationRequiredParamsMap {
@@ -234,6 +276,7 @@ export interface OperationRequiredParamsMap {
   "liquipedia-backlinks": true;
   "liquipedia-categories": true;
   "liquipedia-category-members": true;
+  "liquipedia-embeddedin": true;
   "liquipedia-enums": true;
   "liquipedia-links": true;
   "liquipedia-page": true;
@@ -242,6 +285,7 @@ export interface OperationRequiredParamsMap {
   "liquipedia-search": true;
   "liquipedia-tags": true;
   "liquipedia-wikis": false;
+  "liquipedia-wikitext": true;
 }
 
 export type OperationId = keyof OperationParamsMap;
@@ -256,6 +300,7 @@ export type OperationIdLiteral =
   | "liquipedia-backlinks"
   | "liquipedia-categories"
   | "liquipedia-category-members"
+  | "liquipedia-embeddedin"
   | "liquipedia-enums"
   | "liquipedia-links"
   | "liquipedia-page"
@@ -263,13 +308,15 @@ export type OperationIdLiteral =
   | "liquipedia-recent-changes"
   | "liquipedia-search"
   | "liquipedia-tags"
-  | "liquipedia-wikis";
+  | "liquipedia-wikis"
+  | "liquipedia-wikitext";
 
 export declare const OperationIds: Readonly<{
   LiquipediaAllPages: "liquipedia-all-pages";
   LiquipediaBacklinks: "liquipedia-backlinks";
   LiquipediaCategories: "liquipedia-categories";
   LiquipediaCategoryMembers: "liquipedia-category-members";
+  LiquipediaEmbeddedin: "liquipedia-embeddedin";
   LiquipediaEnums: "liquipedia-enums";
   LiquipediaLinks: "liquipedia-links";
   LiquipediaPage: "liquipedia-page";
@@ -278,4 +325,5 @@ export declare const OperationIds: Readonly<{
   LiquipediaSearch: "liquipedia-search";
   LiquipediaTags: "liquipedia-tags";
   LiquipediaWikis: "liquipedia-wikis";
+  LiquipediaWikitext: "liquipedia-wikitext";
 }>;

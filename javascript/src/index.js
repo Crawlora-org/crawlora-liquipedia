@@ -9,11 +9,12 @@ import {
 
 export class LiquipediaClient extends CrawloraClient {
   constructor(options = {}) {
-    super({ ...options, userAgent: options.userAgent ?? "crawlora-liquipedia-js/0.2.0" });
+    super({ ...options, userAgent: options.userAgent ?? "crawlora-liquipedia-js/0.3.0" });
     this["allPages"] = (...args) => this.request("liquipedia-all-pages", ...args);
     this["backlinks"] = (...args) => this.request("liquipedia-backlinks", ...args);
     this["categories"] = (...args) => this.request("liquipedia-categories", ...args);
     this["categoryMembers"] = (...args) => this.request("liquipedia-category-members", ...args);
+    this["embeddedin"] = (...args) => this.request("liquipedia-embeddedin", ...args);
     this["enums"] = (...args) => this.request("liquipedia-enums", ...args);
     this["links"] = (...args) => this.request("liquipedia-links", ...args);
     this["page"] = (...args) => this.request("liquipedia-page", ...args);
@@ -22,6 +23,7 @@ export class LiquipediaClient extends CrawloraClient {
     this["search"] = (...args) => this.request("liquipedia-search", ...args);
     this["tags"] = (...args) => this.request("liquipedia-tags", ...args);
     this["wikis"] = (...args) => this.request("liquipedia-wikis", ...args);
+    this["wikitext"] = (...args) => this.request("liquipedia-wikitext", ...args);
   }
 }
 
@@ -34,5 +36,5 @@ export {
   CrawloraServerError
 };
 export { groups, operations, operationCount, OperationIds } from "./operations.js";
-export const VERSION = "0.2.0";
+export const VERSION = "0.3.0";
 export default LiquipediaClient;

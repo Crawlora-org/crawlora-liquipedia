@@ -126,6 +126,22 @@ LiquipediaCategoryMembersParams = TypedDict('LiquipediaCategoryMembersParams', {
     'cmendsortkeyprefix': NotRequired[str],
 }, total=False)
 
+LiquipediaEmbeddedinResponse = Any
+LiquipediaEmbeddedinParams = TypedDict('LiquipediaEmbeddedinParams', {
+    '_response_type': NotRequired[ResponseType],
+    '_timeout': NotRequired[float],
+    '_headers': NotRequired[Mapping[str, str]],
+    'wiki': Required[str],
+    'eititle': NotRequired[str],
+    'eipageid': NotRequired[int],
+    'einamespace': NotRequired[list[str]],
+    'eidir': NotRequired[Literal['ascending', 'descending']],
+    'eifilterredir': NotRequired[Literal['all', 'nonredirects', 'redirects']],
+    'eilimit': NotRequired[str],
+    'eicontinue': NotRequired[str],
+    'continue': NotRequired[str],
+}, total=False)
+
 LiquipediaEnumsResponse = Any
 LiquipediaEnumsParams = TypedDict('LiquipediaEnumsParams', {
     '_response_type': NotRequired[ResponseType],
@@ -241,6 +257,32 @@ LiquipediaWikisParams = TypedDict('LiquipediaWikisParams', {
     '_headers': NotRequired[Mapping[str, str]],
 }, total=False)
 
+LiquipediaWikitextResponse = Any
+LiquipediaWikitextParams = TypedDict('LiquipediaWikitextParams', {
+    '_response_type': NotRequired[ResponseType],
+    '_timeout': NotRequired[float],
+    '_headers': NotRequired[Mapping[str, str]],
+    'wiki': Required[str],
+    'titles': NotRequired[list[str]],
+    'pageids': NotRequired[list[int]],
+    'revids': NotRequired[list[int]],
+    'rvprop': NotRequired[list[Literal['comment', 'content', 'contentmodel', 'flagged', 'flags', 'ids', 'parsedcomment', 'parsetree', 'roles', 'sha1', 'size', 'slotsha1', 'slotsize', 'tags', 'timestamp', 'user', 'userid']]],
+    'rvsection': NotRequired[str],
+    'rvlimit': NotRequired[str],
+    'rvstartid': NotRequired[int],
+    'rvendid': NotRequired[int],
+    'rvstart': NotRequired[str],
+    'rvend': NotRequired[str],
+    'rvdir': NotRequired[Literal['newer', 'older']],
+    'rvuser': NotRequired[str],
+    'rvexcludeuser': NotRequired[str],
+    'rvtag': NotRequired[str],
+    'rvcontinue': NotRequired[str],
+    'continue': NotRequired[str],
+    'redirects': NotRequired[bool],
+    'infobox': NotRequired[bool],
+}, total=False)
+
 class LiquipediaGroup:
     @overload
     def all_pages(self, **params: Unpack[LiquipediaAllPagesStreamParams]) -> BinaryIO: ...
@@ -266,6 +308,12 @@ class LiquipediaGroup:
     def category_members(self, **params: Unpack[LiquipediaCategoryMembersTextResponseParams]) -> str: ...
     @overload
     def category_members(self, **params: Unpack[LiquipediaCategoryMembersDefaultParams]) -> LiquipediaCategoryMembersResponse: ...
+    @overload
+    def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinStreamParams]) -> BinaryIO: ...
+    @overload
+    def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinTextResponseParams]) -> str: ...
+    @overload
+    def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinDefaultParams]) -> LiquipediaEmbeddedinResponse: ...
     @overload
     def enums(self, **params: Unpack[LiquipediaEnumsStreamParams]) -> BinaryIO: ...
     @overload
@@ -314,12 +362,19 @@ class LiquipediaGroup:
     def wikis(self, **params: Unpack[LiquipediaWikisTextResponseParams]) -> str: ...
     @overload
     def wikis(self, **params: Unpack[LiquipediaWikisDefaultParams]) -> LiquipediaWikisResponse: ...
+    @overload
+    def wikitext(self, **params: Unpack[LiquipediaWikitextStreamParams]) -> BinaryIO: ...
+    @overload
+    def wikitext(self, **params: Unpack[LiquipediaWikitextTextResponseParams]) -> str: ...
+    @overload
+    def wikitext(self, **params: Unpack[LiquipediaWikitextDefaultParams]) -> LiquipediaWikitextResponse: ...
 
 OperationId = Literal[
     'liquipedia-all-pages',
     'liquipedia-backlinks',
     'liquipedia-categories',
     'liquipedia-category-members',
+    'liquipedia-embeddedin',
     'liquipedia-enums',
     'liquipedia-links',
     'liquipedia-page',
@@ -328,6 +383,7 @@ OperationId = Literal[
     'liquipedia-search',
     'liquipedia-tags',
     'liquipedia-wikis',
+    'liquipedia-wikitext',
 ]
 
 class CrawloraClient:
@@ -463,6 +519,18 @@ class CrawloraClient:
     @overload
     def operation(
         self,
+        operation_id: Literal['liquipedia-embeddedin'],
+        params: LiquipediaEmbeddedinParams,
+        *,
+        response_type: ResponseType = ...,
+        timeout: float | None = ...,
+        headers: Mapping[str, str] | None = ...,
+        retries: int | None = ...,
+        retry_predicate: Callable[[int, BaseException | None], bool] | None = ...,
+    ) -> LiquipediaEmbeddedinResponse: ...
+    @overload
+    def operation(
+        self,
         operation_id: Literal['liquipedia-enums'],
         params: LiquipediaEnumsParams,
         *,
@@ -556,6 +624,18 @@ class CrawloraClient:
         retries: int | None = ...,
         retry_predicate: Callable[[int, BaseException | None], bool] | None = ...,
     ) -> LiquipediaWikisResponse: ...
+    @overload
+    def operation(
+        self,
+        operation_id: Literal['liquipedia-wikitext'],
+        params: LiquipediaWikitextParams,
+        *,
+        response_type: ResponseType = ...,
+        timeout: float | None = ...,
+        headers: Mapping[str, str] | None = ...,
+        retries: int | None = ...,
+        retry_predicate: Callable[[int, BaseException | None], bool] | None = ...,
+    ) -> LiquipediaWikitextResponse: ...
     @overload
     def operation(
         self,
@@ -619,6 +699,18 @@ class CrawloraClient:
     @overload
     def request(
         self,
+        operation_id: Literal['liquipedia-embeddedin'],
+        params: LiquipediaEmbeddedinParams,
+        *,
+        response_type: ResponseType = ...,
+        timeout: float | None = ...,
+        headers: Mapping[str, str] | None = ...,
+        retries: int | None = ...,
+        retry_predicate: Callable[[int, BaseException | None], bool] | None = ...,
+    ) -> LiquipediaEmbeddedinResponse: ...
+    @overload
+    def request(
+        self,
         operation_id: Literal['liquipedia-enums'],
         params: LiquipediaEnumsParams,
         *,
@@ -712,6 +804,18 @@ class CrawloraClient:
         retries: int | None = ...,
         retry_predicate: Callable[[int, BaseException | None], bool] | None = ...,
     ) -> LiquipediaWikisResponse: ...
+    @overload
+    def request(
+        self,
+        operation_id: Literal['liquipedia-wikitext'],
+        params: LiquipediaWikitextParams,
+        *,
+        response_type: ResponseType = ...,
+        timeout: float | None = ...,
+        headers: Mapping[str, str] | None = ...,
+        retries: int | None = ...,
+        retry_predicate: Callable[[int, BaseException | None], bool] | None = ...,
+    ) -> LiquipediaWikitextResponse: ...
     @overload
     def request(
         self,
@@ -776,6 +880,12 @@ class LiquipediaClient(CrawloraClient):
     @overload
     def category_members(self, **params: Unpack[LiquipediaCategoryMembersDefaultParams]) -> LiquipediaCategoryMembersResponse: ...
     @overload
+    def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinStreamParams]) -> BinaryIO: ...
+    @overload
+    def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinTextResponseParams]) -> str: ...
+    @overload
+    def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinDefaultParams]) -> LiquipediaEmbeddedinResponse: ...
+    @overload
     def enums(self, **params: Unpack[LiquipediaEnumsStreamParams]) -> BinaryIO: ...
     @overload
     def enums(self, **params: Unpack[LiquipediaEnumsTextResponseParams]) -> str: ...
@@ -823,6 +933,12 @@ class LiquipediaClient(CrawloraClient):
     def wikis(self, **params: Unpack[LiquipediaWikisTextResponseParams]) -> str: ...
     @overload
     def wikis(self, **params: Unpack[LiquipediaWikisDefaultParams]) -> LiquipediaWikisResponse: ...
+    @overload
+    def wikitext(self, **params: Unpack[LiquipediaWikitextStreamParams]) -> BinaryIO: ...
+    @overload
+    def wikitext(self, **params: Unpack[LiquipediaWikitextTextResponseParams]) -> str: ...
+    @overload
+    def wikitext(self, **params: Unpack[LiquipediaWikitextDefaultParams]) -> LiquipediaWikitextResponse: ...
 
 class AsyncLiquipediaClient(AsyncCrawloraClient):
     async def __aenter__(self) -> AsyncLiquipediaClient: ...
@@ -852,6 +968,12 @@ class AsyncLiquipediaClient(AsyncCrawloraClient):
     @overload
     async def category_members(self, **params: Unpack[LiquipediaCategoryMembersDefaultParams]) -> LiquipediaCategoryMembersResponse: ...
     @overload
+    async def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinStreamParams]) -> BinaryIO: ...
+    @overload
+    async def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinTextResponseParams]) -> str: ...
+    @overload
+    async def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinDefaultParams]) -> LiquipediaEmbeddedinResponse: ...
+    @overload
     async def enums(self, **params: Unpack[LiquipediaEnumsStreamParams]) -> BinaryIO: ...
     @overload
     async def enums(self, **params: Unpack[LiquipediaEnumsTextResponseParams]) -> str: ...
@@ -899,6 +1021,12 @@ class AsyncLiquipediaClient(AsyncCrawloraClient):
     async def wikis(self, **params: Unpack[LiquipediaWikisTextResponseParams]) -> str: ...
     @overload
     async def wikis(self, **params: Unpack[LiquipediaWikisDefaultParams]) -> LiquipediaWikisResponse: ...
+    @overload
+    async def wikitext(self, **params: Unpack[LiquipediaWikitextStreamParams]) -> BinaryIO: ...
+    @overload
+    async def wikitext(self, **params: Unpack[LiquipediaWikitextTextResponseParams]) -> str: ...
+    @overload
+    async def wikitext(self, **params: Unpack[LiquipediaWikitextDefaultParams]) -> LiquipediaWikitextResponse: ...
 
 class _AsyncLiquipediaGroup:
     @overload
@@ -926,6 +1054,12 @@ class _AsyncLiquipediaGroup:
     @overload
     async def category_members(self, **params: Unpack[LiquipediaCategoryMembersDefaultParams]) -> LiquipediaCategoryMembersResponse: ...
     @overload
+    async def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinStreamParams]) -> BinaryIO: ...
+    @overload
+    async def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinTextResponseParams]) -> str: ...
+    @overload
+    async def embeddedin(self, **params: Unpack[LiquipediaEmbeddedinDefaultParams]) -> LiquipediaEmbeddedinResponse: ...
+    @overload
     async def enums(self, **params: Unpack[LiquipediaEnumsStreamParams]) -> BinaryIO: ...
     @overload
     async def enums(self, **params: Unpack[LiquipediaEnumsTextResponseParams]) -> str: ...
@@ -973,6 +1107,12 @@ class _AsyncLiquipediaGroup:
     async def wikis(self, **params: Unpack[LiquipediaWikisTextResponseParams]) -> str: ...
     @overload
     async def wikis(self, **params: Unpack[LiquipediaWikisDefaultParams]) -> LiquipediaWikisResponse: ...
+    @overload
+    async def wikitext(self, **params: Unpack[LiquipediaWikitextStreamParams]) -> BinaryIO: ...
+    @overload
+    async def wikitext(self, **params: Unpack[LiquipediaWikitextTextResponseParams]) -> str: ...
+    @overload
+    async def wikitext(self, **params: Unpack[LiquipediaWikitextDefaultParams]) -> LiquipediaWikitextResponse: ...
 
 LiquipediaAllPagesDefaultParams = TypedDict('LiquipediaAllPagesDefaultParams', {
     '_timeout': NotRequired[float],
@@ -1209,6 +1349,51 @@ LiquipediaCategoryMembersStreamParams = TypedDict('LiquipediaCategoryMembersStre
     'cmendhexsortkey': NotRequired[str],
     'cmstartsortkeyprefix': NotRequired[str],
     'cmendsortkeyprefix': NotRequired[str],
+}, total=False)
+
+LiquipediaEmbeddedinDefaultParams = TypedDict('LiquipediaEmbeddedinDefaultParams', {
+    '_timeout': NotRequired[float],
+    '_headers': NotRequired[Mapping[str, str]],
+    '_response_type': NotRequired[Literal["auto", "json"]],
+    'wiki': Required[str],
+    'eititle': NotRequired[str],
+    'eipageid': NotRequired[int],
+    'einamespace': NotRequired[list[str]],
+    'eidir': NotRequired[Literal['ascending', 'descending']],
+    'eifilterredir': NotRequired[Literal['all', 'nonredirects', 'redirects']],
+    'eilimit': NotRequired[str],
+    'eicontinue': NotRequired[str],
+    'continue': NotRequired[str],
+}, total=False)
+
+LiquipediaEmbeddedinTextResponseParams = TypedDict('LiquipediaEmbeddedinTextResponseParams', {
+    '_timeout': NotRequired[float],
+    '_headers': NotRequired[Mapping[str, str]],
+    '_response_type': Required[Literal["text"]],
+    'wiki': Required[str],
+    'eititle': NotRequired[str],
+    'eipageid': NotRequired[int],
+    'einamespace': NotRequired[list[str]],
+    'eidir': NotRequired[Literal['ascending', 'descending']],
+    'eifilterredir': NotRequired[Literal['all', 'nonredirects', 'redirects']],
+    'eilimit': NotRequired[str],
+    'eicontinue': NotRequired[str],
+    'continue': NotRequired[str],
+}, total=False)
+
+LiquipediaEmbeddedinStreamParams = TypedDict('LiquipediaEmbeddedinStreamParams', {
+    '_timeout': NotRequired[float],
+    '_headers': NotRequired[Mapping[str, str]],
+    '_response_type': Required[Literal["stream"]],
+    'wiki': Required[str],
+    'eititle': NotRequired[str],
+    'eipageid': NotRequired[int],
+    'einamespace': NotRequired[list[str]],
+    'eidir': NotRequired[Literal['ascending', 'descending']],
+    'eifilterredir': NotRequired[Literal['all', 'nonredirects', 'redirects']],
+    'eilimit': NotRequired[str],
+    'eicontinue': NotRequired[str],
+    'continue': NotRequired[str],
 }, total=False)
 
 LiquipediaEnumsDefaultParams = TypedDict('LiquipediaEnumsDefaultParams', {
@@ -1530,4 +1715,79 @@ LiquipediaWikisStreamParams = TypedDict('LiquipediaWikisStreamParams', {
     '_timeout': NotRequired[float],
     '_headers': NotRequired[Mapping[str, str]],
     '_response_type': Required[Literal["stream"]],
+}, total=False)
+
+LiquipediaWikitextDefaultParams = TypedDict('LiquipediaWikitextDefaultParams', {
+    '_timeout': NotRequired[float],
+    '_headers': NotRequired[Mapping[str, str]],
+    '_response_type': NotRequired[Literal["auto", "json"]],
+    'wiki': Required[str],
+    'titles': NotRequired[list[str]],
+    'pageids': NotRequired[list[int]],
+    'revids': NotRequired[list[int]],
+    'rvprop': NotRequired[list[Literal['comment', 'content', 'contentmodel', 'flagged', 'flags', 'ids', 'parsedcomment', 'parsetree', 'roles', 'sha1', 'size', 'slotsha1', 'slotsize', 'tags', 'timestamp', 'user', 'userid']]],
+    'rvsection': NotRequired[str],
+    'rvlimit': NotRequired[str],
+    'rvstartid': NotRequired[int],
+    'rvendid': NotRequired[int],
+    'rvstart': NotRequired[str],
+    'rvend': NotRequired[str],
+    'rvdir': NotRequired[Literal['newer', 'older']],
+    'rvuser': NotRequired[str],
+    'rvexcludeuser': NotRequired[str],
+    'rvtag': NotRequired[str],
+    'rvcontinue': NotRequired[str],
+    'continue': NotRequired[str],
+    'redirects': NotRequired[bool],
+    'infobox': NotRequired[bool],
+}, total=False)
+
+LiquipediaWikitextTextResponseParams = TypedDict('LiquipediaWikitextTextResponseParams', {
+    '_timeout': NotRequired[float],
+    '_headers': NotRequired[Mapping[str, str]],
+    '_response_type': Required[Literal["text"]],
+    'wiki': Required[str],
+    'titles': NotRequired[list[str]],
+    'pageids': NotRequired[list[int]],
+    'revids': NotRequired[list[int]],
+    'rvprop': NotRequired[list[Literal['comment', 'content', 'contentmodel', 'flagged', 'flags', 'ids', 'parsedcomment', 'parsetree', 'roles', 'sha1', 'size', 'slotsha1', 'slotsize', 'tags', 'timestamp', 'user', 'userid']]],
+    'rvsection': NotRequired[str],
+    'rvlimit': NotRequired[str],
+    'rvstartid': NotRequired[int],
+    'rvendid': NotRequired[int],
+    'rvstart': NotRequired[str],
+    'rvend': NotRequired[str],
+    'rvdir': NotRequired[Literal['newer', 'older']],
+    'rvuser': NotRequired[str],
+    'rvexcludeuser': NotRequired[str],
+    'rvtag': NotRequired[str],
+    'rvcontinue': NotRequired[str],
+    'continue': NotRequired[str],
+    'redirects': NotRequired[bool],
+    'infobox': NotRequired[bool],
+}, total=False)
+
+LiquipediaWikitextStreamParams = TypedDict('LiquipediaWikitextStreamParams', {
+    '_timeout': NotRequired[float],
+    '_headers': NotRequired[Mapping[str, str]],
+    '_response_type': Required[Literal["stream"]],
+    'wiki': Required[str],
+    'titles': NotRequired[list[str]],
+    'pageids': NotRequired[list[int]],
+    'revids': NotRequired[list[int]],
+    'rvprop': NotRequired[list[Literal['comment', 'content', 'contentmodel', 'flagged', 'flags', 'ids', 'parsedcomment', 'parsetree', 'roles', 'sha1', 'size', 'slotsha1', 'slotsize', 'tags', 'timestamp', 'user', 'userid']]],
+    'rvsection': NotRequired[str],
+    'rvlimit': NotRequired[str],
+    'rvstartid': NotRequired[int],
+    'rvendid': NotRequired[int],
+    'rvstart': NotRequired[str],
+    'rvend': NotRequired[str],
+    'rvdir': NotRequired[Literal['newer', 'older']],
+    'rvuser': NotRequired[str],
+    'rvexcludeuser': NotRequired[str],
+    'rvtag': NotRequired[str],
+    'rvcontinue': NotRequired[str],
+    'continue': NotRequired[str],
+    'redirects': NotRequired[bool],
+    'infobox': NotRequired[bool],
 }, total=False)

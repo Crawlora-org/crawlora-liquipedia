@@ -1,4 +1,4 @@
-// Package liquipedia is Crawlora's Liquipedia API client for 12 endpoints, covering wiki discovery, pages, search, categories, recent changes, links, and backlinks.
+// Package liquipedia is Crawlora's Liquipedia API client for 14 endpoints, covering wiki discovery, pages, search, categories, recent changes, links, and backlinks.
 // API documentation: https://crawlora.net/docs?utm_source=pkg.go.dev&utm_medium=referral&utm_campaign=platform-clients&utm_content=liquipedia-go-api-docs
 package liquipedia
 
@@ -18,7 +18,7 @@ import (
 
 const (
 	DefaultBaseURL = "https://api.crawlora.net/api/v1"
-	Version        = "0.2.0"
+	Version        = "0.3.0"
 )
 
 // Params maps the exact OpenAPI parameter names expected by this platform client.
@@ -104,7 +104,7 @@ func (c *Client) Call(ctx context.Context, operationID string, params Params) (a
 	if payload != nil {
 		request.Header.Set("Content-Type", "application/json")
 	}
-	request.Header.Set("User-Agent", "crawlora-liquipedia-go/0.2.0")
+	request.Header.Set("User-Agent", "crawlora-liquipedia-go/0.3.0")
 	for _, security := range operation.Security {
 		if security == "ApiKeyAuth" && c.APIKey != "" {
 			request.Header.Set("x-api-key", c.APIKey)

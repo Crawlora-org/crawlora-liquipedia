@@ -1,7 +1,7 @@
 # @crawlora-org/liquipedia — Liquipedia API client for JavaScript and TypeScript
 
 JavaScript and TypeScript client for Crawlora's hosted Liquipedia API.
-It exposes 12 API endpoints for wiki discovery, pages, search, categories, recent changes, links, and backlinks through [Crawlora](https://crawlora.net/?utm_source=npm&utm_medium=referral&utm_campaign=platform-clients&utm_content=liquipedia-javascript-homepage). It does not run a browser or scrape Liquipedia locally. A Crawlora account and `CRAWLORA_API_KEY` are required, and API use is billed under your Crawlora account. Crawlora is independent from and not endorsed by Liquipedia or its owners.
+It exposes 14 API endpoints for wiki discovery, pages, search, categories, recent changes, links, and backlinks through [Crawlora](https://crawlora.net/?utm_source=npm&utm_medium=referral&utm_campaign=platform-clients&utm_content=liquipedia-javascript-homepage). It does not run a browser or scrape Liquipedia locally. A Crawlora account and `CRAWLORA_API_KEY` are required, and API use is billed under your Crawlora account. Crawlora is independent from and not endorsed by Liquipedia or its owners.
 
 ## Install
 
@@ -50,6 +50,7 @@ This package exposes each route below as a direct method and through the `liquip
 | `GET` | `/liquipedia/backlinks` | `liquipedia-backlinks` | List Liquipedia pages linking to a page |
 | `GET` | `/liquipedia/categories` | `liquipedia-categories` | Enumerate categories on a Liquipedia wiki |
 | `GET` | `/liquipedia/category-members` | `liquipedia-category-members` | List Liquipedia category members |
+| `GET` | `/liquipedia/embeddedin` | `liquipedia-embeddedin` | List Liquipedia pages that transclude a template |
 | `GET` | `/liquipedia/enums` | `liquipedia-enums` | Discover Liquipedia MediaWiki filters |
 | `GET` | `/liquipedia/links` | `liquipedia-links` | List links from Liquipedia pages |
 | `GET` | `/liquipedia/page` | `liquipedia-page` | Get a Liquipedia page |
@@ -58,6 +59,7 @@ This package exposes each route below as a direct method and through the `liquip
 | `GET` | `/liquipedia/search` | `liquipedia-search` | Search a Liquipedia wiki |
 | `GET` | `/liquipedia/tags` | `liquipedia-tags` | List change tags on a Liquipedia wiki |
 | `GET` | `/liquipedia/wikis` | `liquipedia-wikis` | Discover Liquipedia wikis |
+| `GET` | `/liquipedia/wikitext` | `liquipedia-wikitext` | Get Liquipedia page wikitext |
 
 ## Configuration
 

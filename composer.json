@@ -1,6 +1,6 @@
 {
   "name": "crawlora/liquipedia",
-  "description": "Crawlora Liquipedia API client with 12 endpoints for wiki discovery, pages, search, categories, recent changes, links, and backlinks",
+  "description": "Crawlora Liquipedia API client with 14 endpoints for wiki discovery, pages, search, categories, recent changes, links, and backlinks",
   "keywords": [
     "crawlora",
     "api-client",

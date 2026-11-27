@@ -42,8 +42,8 @@ class ClientTest {
     @AfterEach void stopServer() { if (server != null) server.stop(0); }
 
     @Test void platformCatalogIsAnExactAllowlistAndExposesDirectMethod() throws Exception {
-        assertEquals(12, Client.OPERATION_IDS.size());
-        assertEquals(List.of("liquipedia-all-pages", "liquipedia-backlinks", "liquipedia-categories", "liquipedia-category-members", "liquipedia-enums", "liquipedia-links", "liquipedia-page", "liquipedia-prefix-search", "liquipedia-recent-changes", "liquipedia-search", "liquipedia-tags", "liquipedia-wikis"), Client.OPERATION_IDS);
+        assertEquals(14, Client.OPERATION_IDS.size());
+        assertEquals(List.of("liquipedia-all-pages", "liquipedia-backlinks", "liquipedia-categories", "liquipedia-category-members", "liquipedia-embeddedin", "liquipedia-enums", "liquipedia-links", "liquipedia-page", "liquipedia-prefix-search", "liquipedia-recent-changes", "liquipedia-search", "liquipedia-tags", "liquipedia-wikis", "liquipedia-wikitext"), Client.OPERATION_IDS);
         assertEquals(new java.util.TreeSet<>(Client.OPERATION_IDS), new java.util.TreeSet<>(Client.operations().keySet()));
         assertEquals(Client.OPERATION_IDS.size(), new Client("key").getOperationCount());
         try (Client client = new Client("test-key", baseUrl, Duration.ofSeconds(2))) {

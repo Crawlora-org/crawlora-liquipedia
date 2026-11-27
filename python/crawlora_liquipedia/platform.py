@@ -7,7 +7,7 @@ from .async_client import AsyncCrawloraClient
 class LiquipediaClient(CrawloraClient):
     """Synchronous Liquipedia API client."""
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        kwargs.setdefault('user_agent', 'crawlora-liquipedia-python/0.2.0')
+        kwargs.setdefault('user_agent', 'crawlora-liquipedia-python/0.3.0')
         super().__init__(*args, **kwargs)
 
     def all_pages(self, **params: Any) -> Any:
@@ -33,6 +33,12 @@ class LiquipediaClient(CrawloraClient):
         timeout = params.pop('_timeout', None)
         headers = params.pop('_headers', None)
         return self.request('liquipedia-category-members', params, response_type=response_type, timeout=timeout, headers=headers)
+
+    def embeddedin(self, **params: Any) -> Any:
+        response_type = params.pop('_response_type', 'auto')
+        timeout = params.pop('_timeout', None)
+        headers = params.pop('_headers', None)
+        return self.request('liquipedia-embeddedin', params, response_type=response_type, timeout=timeout, headers=headers)
 
     def enums(self, **params: Any) -> Any:
         response_type = params.pop('_response_type', 'auto')
@@ -82,10 +88,16 @@ class LiquipediaClient(CrawloraClient):
         headers = params.pop('_headers', None)
         return self.request('liquipedia-wikis', params, response_type=response_type, timeout=timeout, headers=headers)
 
+    def wikitext(self, **params: Any) -> Any:
+        response_type = params.pop('_response_type', 'auto')
+        timeout = params.pop('_timeout', None)
+        headers = params.pop('_headers', None)
+        return self.request('liquipedia-wikitext', params, response_type=response_type, timeout=timeout, headers=headers)
+
 class AsyncLiquipediaClient(AsyncCrawloraClient):
     """Asynchronous Liquipedia API client."""
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        kwargs.setdefault('user_agent', 'crawlora-liquipedia-python/0.2.0')
+        kwargs.setdefault('user_agent', 'crawlora-liquipedia-python/0.3.0')
         super().__init__(*args, **kwargs)
 
     async def all_pages(self, **params: Any) -> Any:
@@ -111,6 +123,12 @@ class AsyncLiquipediaClient(AsyncCrawloraClient):
         timeout = params.pop('_timeout', None)
         headers = params.pop('_headers', None)
         return await self.request('liquipedia-category-members', params, response_type=response_type, timeout=timeout, headers=headers)
+
+    async def embeddedin(self, **params: Any) -> Any:
+        response_type = params.pop('_response_type', 'auto')
+        timeout = params.pop('_timeout', None)
+        headers = params.pop('_headers', None)
+        return await self.request('liquipedia-embeddedin', params, response_type=response_type, timeout=timeout, headers=headers)
 
     async def enums(self, **params: Any) -> Any:
         response_type = params.pop('_response_type', 'auto')
@@ -159,3 +177,9 @@ class AsyncLiquipediaClient(AsyncCrawloraClient):
         timeout = params.pop('_timeout', None)
         headers = params.pop('_headers', None)
         return await self.request('liquipedia-wikis', params, response_type=response_type, timeout=timeout, headers=headers)
+
+    async def wikitext(self, **params: Any) -> Any:
+        response_type = params.pop('_response_type', 'auto')
+        timeout = params.pop('_timeout', None)
+        headers = params.pop('_headers', None)
+        return await self.request('liquipedia-wikitext', params, response_type=response_type, timeout=timeout, headers=headers)

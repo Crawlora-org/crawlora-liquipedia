@@ -3,8 +3,8 @@ require_relative "lib/crawlora/liquipedia/version"
 Gem::Specification.new do |spec|
   spec.name = "crawlora-liquipedia"
   spec.version = Crawlora::Liquipedia::VERSION
-  spec.summary = "Liquipedia API client for Crawlora (12 endpoints)"
-  spec.description = "Ruby client for Crawlora's hosted Liquipedia API. Covers wiki discovery, pages, search, categories, recent changes, links, and backlinks across 12 endpoints."
+  spec.summary = "Liquipedia API client for Crawlora (14 endpoints)"
+  spec.description = "Ruby client for Crawlora's hosted Liquipedia API. Covers wiki discovery, pages, search, categories, recent changes, links, and backlinks across 14 endpoints."
   spec.authors = ["Crawlora"]
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6"

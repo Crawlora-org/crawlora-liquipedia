@@ -1,11 +1,12 @@
 {
   "platform": "liquipedia",
-  "operationCount": 12,
+  "operationCount": 14,
   "operationIds": [
     "liquipedia-all-pages",
     "liquipedia-backlinks",
     "liquipedia-categories",
     "liquipedia-category-members",
+    "liquipedia-embeddedin",
     "liquipedia-enums",
     "liquipedia-links",
     "liquipedia-page",
@@ -13,13 +14,15 @@
     "liquipedia-recent-changes",
     "liquipedia-search",
     "liquipedia-tags",
-    "liquipedia-wikis"
+    "liquipedia-wikis",
+    "liquipedia-wikitext"
   ],
   "methods": {
     "all_pages": "liquipedia-all-pages",
     "backlinks": "liquipedia-backlinks",
     "categories": "liquipedia-categories",
     "category_members": "liquipedia-category-members",
+    "embeddedin": "liquipedia-embeddedin",
     "enums": "liquipedia-enums",
     "links": "liquipedia-links",
     "page": "liquipedia-page",
@@ -27,7 +30,8 @@
     "recent_changes": "liquipedia-recent-changes",
     "search": "liquipedia-search",
     "tags": "liquipedia-tags",
-    "wikis": "liquipedia-wikis"
+    "wikis": "liquipedia-wikis",
+    "wikitext": "liquipedia-wikitext"
   },
   "operations": {
     "liquipedia-all-pages": {
@@ -885,6 +889,148 @@
           "description": "Sort-key prefix end bound for cmsort=sortkey",
           "in": "query",
           "name": "cmendsortkeyprefix",
+          "type": "string"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "liquipedia-embeddedin": {
+      "id": "liquipedia-embeddedin",
+      "method": "GET",
+      "path": "/liquipedia/embeddedin",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "wiki",
+          "in": "query",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "eititle",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "eipageid",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "einamespace",
+          "in": "query",
+          "collectionFormat": "multi",
+          "type": "array"
+        },
+        {
+          "name": "eidir",
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "ascending",
+            "descending"
+          ]
+        },
+        {
+          "name": "eifilterredir",
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "all",
+            "nonredirects",
+            "redirects"
+          ]
+        },
+        {
+          "name": "eilimit",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "eicontinue",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "continue",
+          "in": "query",
+          "type": "string"
+        }
+      ],
+      "bodyParam": null,
+      "bodyRequired": false,
+      "params": [
+        {
+          "description": "Liquipedia wiki slug from liquipedia_wikis",
+          "in": "query",
+          "name": "wiki",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "description": "Transcluded page title such as Template:Infobox league; mutually exclusive with eipageid",
+          "in": "query",
+          "name": "eititle",
+          "type": "string"
+        },
+        {
+          "description": "Transcluded page ID; mutually exclusive with eititle",
+          "in": "query",
+          "name": "eipageid",
+          "type": "integer"
+        },
+        {
+          "collectionFormat": "multi",
+          "description": "Repeatable transcluding-page namespace ID filter, or * for all",
+          "in": "query",
+          "items": {
+            "type": "string"
+          },
+          "name": "einamespace",
+          "type": "array"
+        },
+        {
+          "description": "Source ordering direction",
+          "enum": [
+            "ascending",
+            "descending"
+          ],
+          "in": "query",
+          "name": "eidir",
+          "type": "string"
+        },
+        {
+          "description": "Source redirect filter",
+          "enum": [
+            "all",
+            "nonredirects",
+            "redirects"
+          ],
+          "in": "query",
+          "name": "eifilterredir",
+          "type": "string"
+        },
+        {
+          "description": "Page size from 1 through 500, or max; source default is 10",
+          "in": "query",
+          "name": "eilimit",
+          "type": "string"
+        },
+        {
+          "description": "Native embeddedin continuation value",
+          "in": "query",
+          "name": "eicontinue",
+          "type": "string"
+        },
+        {
+          "description": "Global MediaWiki continuation value",
+          "in": "query",
+          "name": "continue",
           "type": "string"
         }
       ],
@@ -2012,6 +2158,303 @@
       "bodyParam": null,
       "bodyRequired": false,
       "params": [],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "liquipedia-wikitext": {
+      "id": "liquipedia-wikitext",
+      "method": "GET",
+      "path": "/liquipedia/wikitext",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "wiki",
+          "in": "query",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "titles",
+          "in": "query",
+          "collectionFormat": "multi",
+          "type": "array"
+        },
+        {
+          "name": "pageids",
+          "in": "query",
+          "collectionFormat": "multi",
+          "type": "array"
+        },
+        {
+          "name": "revids",
+          "in": "query",
+          "collectionFormat": "multi",
+          "type": "array"
+        },
+        {
+          "name": "rvprop",
+          "in": "query",
+          "collectionFormat": "multi",
+          "type": "array",
+          "enum": [
+            "comment",
+            "content",
+            "contentmodel",
+            "flagged",
+            "flags",
+            "ids",
+            "parsedcomment",
+            "parsetree",
+            "roles",
+            "sha1",
+            "size",
+            "slotsha1",
+            "slotsize",
+            "tags",
+            "timestamp",
+            "user",
+            "userid"
+          ]
+        },
+        {
+          "name": "rvsection",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "rvlimit",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "rvstartid",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "rvendid",
+          "in": "query",
+          "type": "integer"
+        },
+        {
+          "name": "rvstart",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "rvend",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "rvdir",
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "newer",
+            "older"
+          ]
+        },
+        {
+          "name": "rvuser",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "rvexcludeuser",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "rvtag",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "rvcontinue",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "continue",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "redirects",
+          "in": "query",
+          "type": "boolean"
+        },
+        {
+          "name": "infobox",
+          "in": "query",
+          "type": "boolean"
+        }
+      ],
+      "bodyParam": null,
+      "bodyRequired": false,
+      "params": [
+        {
+          "description": "Liquipedia wiki slug from liquipedia_wikis",
+          "in": "query",
+          "name": "wiki",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "collectionFormat": "multi",
+          "description": "Repeatable source page titles (up to 50); exactly one of titles, pageids or revids",
+          "in": "query",
+          "items": {
+            "type": "string"
+          },
+          "name": "titles",
+          "type": "array"
+        },
+        {
+          "collectionFormat": "multi",
+          "description": "Repeatable source page IDs (up to 50); exactly one of titles, pageids or revids",
+          "in": "query",
+          "items": {
+            "type": "integer"
+          },
+          "name": "pageids",
+          "type": "array"
+        },
+        {
+          "collectionFormat": "multi",
+          "description": "Repeatable source revision IDs (up to 50); exactly one of titles, pageids or revids",
+          "in": "query",
+          "items": {
+            "type": "integer"
+          },
+          "name": "revids",
+          "type": "array"
+        },
+        {
+          "collectionFormat": "multi",
+          "description": "Repeatable revision metadata fields; content is always included",
+          "in": "query",
+          "items": {
+            "enum": [
+              "comment",
+              "content",
+              "contentmodel",
+              "flagged",
+              "flags",
+              "ids",
+              "parsedcomment",
+              "parsetree",
+              "roles",
+              "sha1",
+              "size",
+              "slotsha1",
+              "slotsize",
+              "tags",
+              "timestamp",
+              "user",
+              "userid"
+            ],
+            "type": "string"
+          },
+          "name": "rvprop",
+          "type": "array"
+        },
+        {
+          "description": "Section number to return (0 is the lead section)",
+          "in": "query",
+          "name": "rvsection",
+          "type": "string"
+        },
+        {
+          "description": "Revisions to return for one page's history, 1 through 50 or max",
+          "in": "query",
+          "name": "rvlimit",
+          "type": "string"
+        },
+        {
+          "description": "History: revision ID to start from",
+          "format": "int64",
+          "in": "query",
+          "name": "rvstartid",
+          "type": "integer"
+        },
+        {
+          "description": "History: revision ID to stop at",
+          "format": "int64",
+          "in": "query",
+          "name": "rvendid",
+          "type": "integer"
+        },
+        {
+          "description": "History: ISO 8601 timestamp to start from",
+          "in": "query",
+          "name": "rvstart",
+          "type": "string"
+        },
+        {
+          "description": "History: ISO 8601 timestamp to stop at",
+          "in": "query",
+          "name": "rvend",
+          "type": "string"
+        },
+        {
+          "description": "History ordering; older lists newest first",
+          "enum": [
+            "newer",
+            "older"
+          ],
+          "in": "query",
+          "name": "rvdir",
+          "type": "string"
+        },
+        {
+          "description": "History: only revisions by this editor",
+          "in": "query",
+          "name": "rvuser",
+          "type": "string"
+        },
+        {
+          "description": "History: exclude revisions by this editor",
+          "in": "query",
+          "name": "rvexcludeuser",
+          "type": "string"
+        },
+        {
+          "description": "History: only revisions with this change tag (see liquipedia_tags)",
+          "in": "query",
+          "name": "rvtag",
+          "type": "string"
+        },
+        {
+          "description": "Native revisions continuation value",
+          "in": "query",
+          "name": "rvcontinue",
+          "type": "string"
+        },
+        {
+          "description": "Global MediaWiki continuation value",
+          "in": "query",
+          "name": "continue",
+          "type": "string"
+        },
+        {
+          "description": "Resolve redirects for titles or page IDs",
+          "in": "query",
+          "name": "redirects",
+          "type": "boolean"
+        },
+        {
+          "description": "Add each revision's top-level Infobox template parameters as raw wikitext values",
+          "in": "query",
+          "name": "infobox",
+          "type": "boolean"
+        }
+      ],
       "produces": [
         "application/json"
       ],

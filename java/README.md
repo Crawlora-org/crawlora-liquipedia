@@ -1,6 +1,6 @@
 # Crawlora Liquipedia API client for Java
 
-The official Java client for Crawlora's hosted Liquipedia API. It exposes 12 endpoints covering wiki discovery, pages, search, categories, recent changes, links, and backlinks. Requests use your `x-api-key`; the client does not connect to the upstream site directly.
+The official Java client for Crawlora's hosted Liquipedia API. It exposes 14 endpoints covering wiki discovery, pages, search, categories, recent changes, links, and backlinks. Requests use your `x-api-key`; the client does not connect to the upstream site directly.
 
 ## Install
 
@@ -8,7 +8,7 @@ The official Java client for Crawlora's hosted Liquipedia API. It exposes 12 end
 <dependency>
   <groupId>net.crawlora</groupId>
   <artifactId>crawlora-liquipedia</artifactId>
-  <version>0.2.0</version>
+  <version>0.3.0</version>
 </dependency>
 ```
 
@@ -41,6 +41,7 @@ Browse every route included in this Java package. The [endpoint reference](https
 | `GET` | `/liquipedia/backlinks` | `liquipedia-backlinks` | List Liquipedia pages linking to a page |
 | `GET` | `/liquipedia/categories` | `liquipedia-categories` | Enumerate categories on a Liquipedia wiki |
 | `GET` | `/liquipedia/category-members` | `liquipedia-category-members` | List Liquipedia category members |
+| `GET` | `/liquipedia/embeddedin` | `liquipedia-embeddedin` | List Liquipedia pages that transclude a template |
 | `GET` | `/liquipedia/enums` | `liquipedia-enums` | Discover Liquipedia MediaWiki filters |
 | `GET` | `/liquipedia/links` | `liquipedia-links` | List links from Liquipedia pages |
 | `GET` | `/liquipedia/page` | `liquipedia-page` | Get a Liquipedia page |
@@ -49,6 +50,7 @@ Browse every route included in this Java package. The [endpoint reference](https
 | `GET` | `/liquipedia/search` | `liquipedia-search` | Search a Liquipedia wiki |
 | `GET` | `/liquipedia/tags` | `liquipedia-tags` | List change tags on a Liquipedia wiki |
 | `GET` | `/liquipedia/wikis` | `liquipedia-wikis` | Discover Liquipedia wikis |
+| `GET` | `/liquipedia/wikitext` | `liquipedia-wikitext` | Get Liquipedia page wikitext |
 
 ## Links
 

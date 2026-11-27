@@ -440,6 +440,82 @@ export const operations = {
       "ApiKeyAuth"
     ]
   },
+  "liquipedia-embeddedin": {
+    "bodyParam": null,
+    "bodyRequired": false,
+    "consumes": [
+      "application/json"
+    ],
+    "formParams": [],
+    "id": "liquipedia-embeddedin",
+    "method": "GET",
+    "path": "/liquipedia/embeddedin",
+    "pathParams": [],
+    "produces": [
+      "application/json"
+    ],
+    "queryParams": [
+      {
+        "in": "query",
+        "name": "wiki",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "eititle",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "eipageid",
+        "type": "integer"
+      },
+      {
+        "collectionFormat": "multi",
+        "in": "query",
+        "name": "einamespace",
+        "type": "array"
+      },
+      {
+        "enum": [
+          "ascending",
+          "descending"
+        ],
+        "in": "query",
+        "name": "eidir",
+        "type": "string"
+      },
+      {
+        "enum": [
+          "all",
+          "nonredirects",
+          "redirects"
+        ],
+        "in": "query",
+        "name": "eifilterredir",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "eilimit",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "eicontinue",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "continue",
+        "type": "string"
+      }
+    ],
+    "security": [
+      "ApiKeyAuth"
+    ]
+  },
   "liquipedia-enums": {
     "bodyParam": null,
     "bodyRequired": false,
@@ -1039,6 +1115,149 @@ export const operations = {
     "security": [
       "ApiKeyAuth"
     ]
+  },
+  "liquipedia-wikitext": {
+    "bodyParam": null,
+    "bodyRequired": false,
+    "consumes": [
+      "application/json"
+    ],
+    "formParams": [],
+    "id": "liquipedia-wikitext",
+    "method": "GET",
+    "path": "/liquipedia/wikitext",
+    "pathParams": [],
+    "produces": [
+      "application/json"
+    ],
+    "queryParams": [
+      {
+        "in": "query",
+        "name": "wiki",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "collectionFormat": "multi",
+        "in": "query",
+        "name": "titles",
+        "type": "array"
+      },
+      {
+        "collectionFormat": "multi",
+        "in": "query",
+        "name": "pageids",
+        "type": "array"
+      },
+      {
+        "collectionFormat": "multi",
+        "in": "query",
+        "name": "revids",
+        "type": "array"
+      },
+      {
+        "collectionFormat": "multi",
+        "enum": [
+          "comment",
+          "content",
+          "contentmodel",
+          "flagged",
+          "flags",
+          "ids",
+          "parsedcomment",
+          "parsetree",
+          "roles",
+          "sha1",
+          "size",
+          "slotsha1",
+          "slotsize",
+          "tags",
+          "timestamp",
+          "user",
+          "userid"
+        ],
+        "in": "query",
+        "name": "rvprop",
+        "type": "array"
+      },
+      {
+        "in": "query",
+        "name": "rvsection",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "rvlimit",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "rvstartid",
+        "type": "integer"
+      },
+      {
+        "in": "query",
+        "name": "rvendid",
+        "type": "integer"
+      },
+      {
+        "in": "query",
+        "name": "rvstart",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "rvend",
+        "type": "string"
+      },
+      {
+        "enum": [
+          "newer",
+          "older"
+        ],
+        "in": "query",
+        "name": "rvdir",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "rvuser",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "rvexcludeuser",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "rvtag",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "rvcontinue",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "continue",
+        "type": "string"
+      },
+      {
+        "in": "query",
+        "name": "redirects",
+        "type": "boolean"
+      },
+      {
+        "in": "query",
+        "name": "infobox",
+        "type": "boolean"
+      }
+    ],
+    "security": [
+      "ApiKeyAuth"
+    ]
   }
 };
 
@@ -1048,6 +1267,7 @@ export const groups = {
     "backlinks": "liquipedia-backlinks",
     "categories": "liquipedia-categories",
     "categoryMembers": "liquipedia-category-members",
+    "embeddedin": "liquipedia-embeddedin",
     "enums": "liquipedia-enums",
     "links": "liquipedia-links",
     "page": "liquipedia-page",
@@ -1055,17 +1275,19 @@ export const groups = {
     "recentChanges": "liquipedia-recent-changes",
     "search": "liquipedia-search",
     "tags": "liquipedia-tags",
-    "wikis": "liquipedia-wikis"
+    "wikis": "liquipedia-wikis",
+    "wikitext": "liquipedia-wikitext"
   }
 };
 
-export const operationCount = 12;
+export const operationCount = 14;
 
 export const OperationIds = Object.freeze({
   "LiquipediaAllPages": "liquipedia-all-pages",
   "LiquipediaBacklinks": "liquipedia-backlinks",
   "LiquipediaCategories": "liquipedia-categories",
   "LiquipediaCategoryMembers": "liquipedia-category-members",
+  "LiquipediaEmbeddedin": "liquipedia-embeddedin",
   "LiquipediaEnums": "liquipedia-enums",
   "LiquipediaLinks": "liquipedia-links",
   "LiquipediaPage": "liquipedia-page",
@@ -1073,5 +1295,6 @@ export const OperationIds = Object.freeze({
   "LiquipediaRecentChanges": "liquipedia-recent-changes",
   "LiquipediaSearch": "liquipedia-search",
   "LiquipediaTags": "liquipedia-tags",
-  "LiquipediaWikis": "liquipedia-wikis"
+  "LiquipediaWikis": "liquipedia-wikis",
+  "LiquipediaWikitext": "liquipedia-wikitext"
 });

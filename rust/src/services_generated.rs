@@ -150,6 +150,28 @@ pub struct LiquipediaCategoryMembersParams {
 }
 
 #[derive(Debug, Clone, Default, serde::Serialize)]
+pub struct LiquipediaEmbeddedinParams {
+    #[serde(rename = "wiki", skip_serializing_if = "Option::is_none")]
+    pub wiki: Option<String>,
+    #[serde(rename = "eititle", skip_serializing_if = "Option::is_none")]
+    pub eititle: Option<String>,
+    #[serde(rename = "eipageid", skip_serializing_if = "Option::is_none")]
+    pub eipageid: Option<i64>,
+    #[serde(rename = "einamespace", skip_serializing_if = "Option::is_none")]
+    pub einamespace: Option<Vec<String>>,
+    #[serde(rename = "eidir", skip_serializing_if = "Option::is_none")]
+    pub eidir: Option<String>,
+    #[serde(rename = "eifilterredir", skip_serializing_if = "Option::is_none")]
+    pub eifilterredir: Option<String>,
+    #[serde(rename = "eilimit", skip_serializing_if = "Option::is_none")]
+    pub eilimit: Option<String>,
+    #[serde(rename = "eicontinue", skip_serializing_if = "Option::is_none")]
+    pub eicontinue: Option<String>,
+    #[serde(rename = "continue", skip_serializing_if = "Option::is_none")]
+    pub continue_: Option<String>,
+}
+
+#[derive(Debug, Clone, Default, serde::Serialize)]
 pub struct LiquipediaEnumsParams {
     #[serde(rename = "wiki", skip_serializing_if = "Option::is_none")]
     pub wiki: Option<String>,
@@ -301,6 +323,48 @@ pub struct LiquipediaWikisParams {
     _empty: Option<()>,
 }
 
+#[derive(Debug, Clone, Default, serde::Serialize)]
+pub struct LiquipediaWikitextParams {
+    #[serde(rename = "wiki", skip_serializing_if = "Option::is_none")]
+    pub wiki: Option<String>,
+    #[serde(rename = "titles", skip_serializing_if = "Option::is_none")]
+    pub titles: Option<Vec<String>>,
+    #[serde(rename = "pageids", skip_serializing_if = "Option::is_none")]
+    pub pageids: Option<Vec<i64>>,
+    #[serde(rename = "revids", skip_serializing_if = "Option::is_none")]
+    pub revids: Option<Vec<i64>>,
+    #[serde(rename = "rvprop", skip_serializing_if = "Option::is_none")]
+    pub rvprop: Option<Vec<String>>,
+    #[serde(rename = "rvsection", skip_serializing_if = "Option::is_none")]
+    pub rvsection: Option<String>,
+    #[serde(rename = "rvlimit", skip_serializing_if = "Option::is_none")]
+    pub rvlimit: Option<String>,
+    #[serde(rename = "rvstartid", skip_serializing_if = "Option::is_none")]
+    pub rvstartid: Option<i64>,
+    #[serde(rename = "rvendid", skip_serializing_if = "Option::is_none")]
+    pub rvendid: Option<i64>,
+    #[serde(rename = "rvstart", skip_serializing_if = "Option::is_none")]
+    pub rvstart: Option<String>,
+    #[serde(rename = "rvend", skip_serializing_if = "Option::is_none")]
+    pub rvend: Option<String>,
+    #[serde(rename = "rvdir", skip_serializing_if = "Option::is_none")]
+    pub rvdir: Option<String>,
+    #[serde(rename = "rvuser", skip_serializing_if = "Option::is_none")]
+    pub rvuser: Option<String>,
+    #[serde(rename = "rvexcludeuser", skip_serializing_if = "Option::is_none")]
+    pub rvexcludeuser: Option<String>,
+    #[serde(rename = "rvtag", skip_serializing_if = "Option::is_none")]
+    pub rvtag: Option<String>,
+    #[serde(rename = "rvcontinue", skip_serializing_if = "Option::is_none")]
+    pub rvcontinue: Option<String>,
+    #[serde(rename = "continue", skip_serializing_if = "Option::is_none")]
+    pub continue_: Option<String>,
+    #[serde(rename = "redirects", skip_serializing_if = "Option::is_none")]
+    pub redirects: Option<bool>,
+    #[serde(rename = "infobox", skip_serializing_if = "Option::is_none")]
+    pub infobox: Option<bool>,
+}
+
 #[derive(Clone)]
 pub struct LiquipediaApi {
     pub(crate) inner: Arc<ClientInner>,
@@ -338,6 +402,15 @@ impl LiquipediaApi {
                 &params,
                 RequestOptions::default(),
             )
+            .await
+    }
+
+    pub async fn embeddedin(
+        &self,
+        params: LiquipediaEmbeddedinParams,
+    ) -> Result<ApiResponse, Error> {
+        self.inner
+            .call("liquipedia-embeddedin", &params, RequestOptions::default())
             .await
     }
 
@@ -400,6 +473,12 @@ impl LiquipediaApi {
     pub async fn wikis(&self, params: LiquipediaWikisParams) -> Result<ApiResponse, Error> {
         self.inner
             .call("liquipedia-wikis", &params, RequestOptions::default())
+            .await
+    }
+
+    pub async fn wikitext(&self, params: LiquipediaWikitextParams) -> Result<ApiResponse, Error> {
+        self.inner
+            .call("liquipedia-wikitext", &params, RequestOptions::default())
             .await
     }
 }

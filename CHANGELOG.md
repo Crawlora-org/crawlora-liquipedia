@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0 — 2026-11-27
+
+- Added operations: liquipedia-embeddedin, liquipedia-wikitext.
+- Updated operation contracts: liquipedia-enums.
+
 ## 0.2.0 — 2026-11-23
 
 - Updated operation contracts: liquipedia-recent-changes.

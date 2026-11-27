@@ -89,6 +89,7 @@ export class LiquipediaClient extends CrawloraClient {
   backlinks(params: OperationParamsMap["liquipedia-backlinks"], options: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
   categories(params: OperationParamsMap["liquipedia-categories"], options: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
   categoryMembers(params: OperationParamsMap["liquipedia-category-members"], options: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
+  embeddedin(params: OperationParamsMap["liquipedia-embeddedin"], options: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
   enums(params: OperationParamsMap["liquipedia-enums"], options: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
   links(params: OperationParamsMap["liquipedia-links"], options: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
   page(params: OperationParamsMap["liquipedia-page"], options: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
@@ -97,12 +98,14 @@ export class LiquipediaClient extends CrawloraClient {
   search(params: OperationParamsMap["liquipedia-search"], options: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
   tags(params: OperationParamsMap["liquipedia-tags"], options: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
   wikis(params?: OperationParamsMap["liquipedia-wikis"], options?: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
+  wikitext(params: OperationParamsMap["liquipedia-wikitext"], options: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
   request<I extends OperationId>(operationId: I, params: OperationParamsMap[I], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
   operation<I extends OperationId>(operationId: I, params: OperationParamsMap[I], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
   allPages(params: OperationParamsMap["liquipedia-all-pages"], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
   backlinks(params: OperationParamsMap["liquipedia-backlinks"], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
   categories(params: OperationParamsMap["liquipedia-categories"], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
   categoryMembers(params: OperationParamsMap["liquipedia-category-members"], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
+  embeddedin(params: OperationParamsMap["liquipedia-embeddedin"], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
   enums(params: OperationParamsMap["liquipedia-enums"], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
   links(params: OperationParamsMap["liquipedia-links"], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
   page(params: OperationParamsMap["liquipedia-page"], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
@@ -111,6 +114,7 @@ export class LiquipediaClient extends CrawloraClient {
   search(params: OperationParamsMap["liquipedia-search"], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
   tags(params: OperationParamsMap["liquipedia-tags"], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
   wikis(params?: OperationParamsMap["liquipedia-wikis"], options?: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
+  wikitext(params: OperationParamsMap["liquipedia-wikitext"], options: CrawloraRequestOptions & { responseType: "text" }): Promise<string>;
 
   request<I extends OperationId>(operationId: I, params: OperationParamsMap[I], options: CrawloraRequestOptions & { responseType: "stream" }): Promise<Response>;
   request<I extends OperationId>(operationId: I, ...args: OperationRequestArgs<I>): Promise<OperationResponseMap[I]>;
@@ -120,6 +124,7 @@ export class LiquipediaClient extends CrawloraClient {
   backlinks(...args: OperationRequestArgs<"liquipedia-backlinks">): Promise<OperationResponseMap["liquipedia-backlinks"]>;
   categories(...args: OperationRequestArgs<"liquipedia-categories">): Promise<OperationResponseMap["liquipedia-categories"]>;
   categoryMembers(...args: OperationRequestArgs<"liquipedia-category-members">): Promise<OperationResponseMap["liquipedia-category-members"]>;
+  embeddedin(...args: OperationRequestArgs<"liquipedia-embeddedin">): Promise<OperationResponseMap["liquipedia-embeddedin"]>;
   enums(...args: OperationRequestArgs<"liquipedia-enums">): Promise<OperationResponseMap["liquipedia-enums"]>;
   links(...args: OperationRequestArgs<"liquipedia-links">): Promise<OperationResponseMap["liquipedia-links"]>;
   page(...args: OperationRequestArgs<"liquipedia-page">): Promise<OperationResponseMap["liquipedia-page"]>;
@@ -128,6 +133,7 @@ export class LiquipediaClient extends CrawloraClient {
   search(...args: OperationRequestArgs<"liquipedia-search">): Promise<OperationResponseMap["liquipedia-search"]>;
   tags(...args: OperationRequestArgs<"liquipedia-tags">): Promise<OperationResponseMap["liquipedia-tags"]>;
   wikis(...args: OperationRequestArgs<"liquipedia-wikis">): Promise<OperationResponseMap["liquipedia-wikis"]>;
+  wikitext(...args: OperationRequestArgs<"liquipedia-wikitext">): Promise<OperationResponseMap["liquipedia-wikitext"]>;
 }
 export { LiquipediaClient as Client };
 export const operations: Record<string, OperationDefinition>;
