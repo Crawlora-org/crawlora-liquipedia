@@ -1,0 +1,30 @@
+name: Refresh Context7 library
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    if: ${{ vars.CONTEXT7_REFRESH_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Refresh Context7 documentation
+        env:
+          CONTEXT7_API_KEY: ${{ secrets.CONTEXT7_API_KEY }}
+        run: |
+          if [ -z "${CONTEXT7_API_KEY:-}" ]; then
+            echo "::notice::Skipping Context7 refresh; CONTEXT7_API_KEY Actions secret is not configured."
+            exit 0
+          fi
+          curl --fail-with-body --silent --show-error \
+            --request POST https://context7.com/api/v1/refresh \
+            --header 'Content-Type: application/json' \
+            --header "Authorization: Bearer ${CONTEXT7_API_KEY}" \
+            --data '{"libraryName":"/crawlora-org/crawlora-liquipedia"}'
